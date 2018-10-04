@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('serviceDeskApp')
-.controller('EditRequesttypeCtrl', function ($scope, $http, $location, $window, $routeParams) {
+.controller('EditRequesttypeCtrl', function ($scope, $http, $location, $window, $routeParams, socket) {
 
     $scope.requesttype = {};
     $scope.submitted = false;

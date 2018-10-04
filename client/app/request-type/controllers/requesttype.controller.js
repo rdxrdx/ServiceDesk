@@ -12,16 +12,15 @@ angular.module('serviceDeskApp')
         socket.syncUpdates('requesttype', $scope.requesttypes,function(event,requesttype,requesttypes){
         });
     });
+    $scope.cancel = function() {
+        $window.history.back();
+    };
 
     $scope.delete = function(requesttpe) {
         $http.delete('/api/request-type/' + requesttype._id);
     };
 
-    $scope.cancel = function() {
-        $window.history.back();
-    };
-
     $scope.$on('$destroy', function () {
-        socket.unsyncUpdates('requesttpe');
+        socket.unsyncUpdates('requesttype');
     });
 });

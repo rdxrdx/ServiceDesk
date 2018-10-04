@@ -15,11 +15,11 @@ exports.rfccallReport = function(req, res) {
         else {
             var temp = items.reduce(function(p,c){
                 var defaultValue = {
-                    x: c.changeRequestType.requesttypeName,
+                    x: c.changeRequestType,
                     y: 0
                 };
-                p[c.changeRequestType.requesttypeName] = p[c.changeRequestType.requesttypeName] || defaultValue
-                p[c.changeRequestType.requesttypeName].y++;
+                p[c.changeRequestType] = p[c.changeRequestType] || defaultValue
+                p[c.changeRequestType].y++;
                 
                 return p;
             }, {});
@@ -46,7 +46,7 @@ exports.index = function(req, res) {
 		var itemsArray = []
 		var itemIds = rfccalls
 		for (var i = 0; i < rfccalls.length; i++) {
-			var status = itemIds[i].changeRequestType.requesttypeName
+			var status = itemIds[i].changeRequestType
 			
 			itemsArray.push(status);
 			if(itemIds.length === itemsArray.length){

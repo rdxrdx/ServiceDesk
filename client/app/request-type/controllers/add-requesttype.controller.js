@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('serviceDeskApp')
-.controller('AddRequesttypeCtrl', function ($scope, $http, $location, $window) {
+.controller('AddRequesttypeCtrl', function ($scope, $http, $location, $window, socket) {
 
     $scope.issuepriority = {};
     $scope.submitted = false;
