@@ -72,7 +72,7 @@ angular.module('serviceDeskApp')
             $scope.issue.escalated = true;
             $scope.issue.escalateCount++;
             $scope.issue.modified = moment(new Date());
-            
+               
             $http.put('/api/issues/' + $scope.issue._id,$scope.issue);
             $scope.issue = '';
             $location.path('/issues');

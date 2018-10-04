@@ -4,6 +4,7 @@ var queue = kue.createQueue();
 
 var _ = require('lodash');
 var Issue = require('./issue.model');
+var nodemailer = require('nodemailer');
 
 
 //kue
@@ -319,31 +320,110 @@ exports.create = function(req, res) {
 };
 
 // Updates an existing jobcard in the DB.
-exports.update = function(req, res) {
-	if(req.body._id) { delete req.body._id; }
-	Issue.findById(req.params.id, function (err, issue) {
+exports.update =
+function(req,
+res) {
 
-		if(req.body.comments) {
-			issue.comments = req.body.comments;
-		}
-        if (req.body.closed) {
-            issue.closed = req.body.closed;
+    if(req.body._id) {
+delete req.body._id; }
+
+    Issue.findById(req.params.id,
+function (err,
+issue) {
+
+
+
+        if(req.body.comments) {
+
+            issue.comments =
+req.body.comments;
+
         }
 
-		if (err) { return handleError(res, err); }
-		if(!issue) { return res.send(404); }
-		var updated = _.merge(issue, req.body);
+if (req.body.closed) {
 
-		updated.markModified('comments');
+issue.closed =
+req.body.closed;
 
-		updated.save(function (err) {
-			if (err) { return handleError(res, err); }
-			return res.json(200, issue);
-		});
-	});
+}
+
+
+
+//Sending Email when the issues is closed
+
+// processing email using nodemailer 
+
+
+
+var transporter =
+nodemailer.createTransport({
+
+service: 'gmail',
+
+auth: {
+
+user: 'smangele.feliciamthembu@gmail.com',
+
+pass: 'Mpiza@123'
+
+}
+
+});
+
+const mailOptions = {
+from: 'ssmangele.feliciamthembu@gmail.com',
+// sender address
+
+to: 'sedzesanitshamano@gmail.com',
+// list of receivers
+
+subject: 'Please Rate The System', // Subject line
+
+html: '<button>Rating</button>'// plain text body
+
 };
 
 
+
+
+transporter.sendMail(mailOptions,
+function (err,info) {
+
+if(err)
+
+console.log(err)
+
+else
+
+console.log(info);
+
+});
+
+if (err) {
+return handleError(res,
+err); }
+
+        if(!issue) {
+return res.send(404); }
+
+var 
+updated = _.merge(issue,req.body);
+
+    updated.markModified('comments');
+
+    updated.save(function (err) {
+
+            if (err) {
+return handleError(res,err); }
+
+            return 
+res.json(200,issue);
+
+        });
+
+    });
+
+};
 // Deletes a issue from the DB.
 exports.destroy = function(req, res) {
 	Issue.findById(req.params.id, function (err, issue) {
