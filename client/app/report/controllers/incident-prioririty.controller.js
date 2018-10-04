@@ -154,59 +154,128 @@ angular.module('serviceDeskApp')
             console.log('Report Created!!')
     })
 
-    $scope.searchIssues = function (category, status, startDate, endDate) {
+    $scope.searchIssues = function (category, status, startDate, endDate) {        
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                   
+                    // if ((category == "-1") || (status == "-1")) { //get all closed incidents
+                     $http.get('/api/issues').success(function (issues) {
+                        if ( category =="-1" ) { //get all closed incidents
+                             for (var x = 0; x < issues.length; x++) { //testing for all category and status filter
+                                if (issues[x].issueStatus.issueStatusName == "Closed") {
+                                    $scope.issues[x] = issues[x];
+                                    $scope.issues[x].duration = $scope.resolutionTime($scope.issues[x].added).toFixed(3) + ' Hours';
+        
+                                }  
+                                            
+                            }//end loop
+                             
+                            console.log('/api/issues/');
+                          } else if ( (startDate != "-1") && (endDate != " -1")) {
+                            for (var x = 0; x < issues.length; x++) { //testing for all category and status filter
+                                if (issues[x].issueStatus.issueStatusName == "Closed") {
+                                    $scope.issues[x] = issues[x];
+                                    $scope.issues[x].duration = $scope.resolutionTime($scope.issues[x].added).toFixed(3) + ' Hours';
+        
+                                }  
+                                            
+                            }
+                            $scope.dateR = {};
+                            $scope.dateArray = [];
+                            $scope.dateArray.push(startDate);
+                            $scope.dateArray.push(endDate);
+                            $scope.dateR = JSON.stringify($scope.dateArray);
+        
+                            /*$scope.date.endDate = endDate;*/
+                            
+                    
+                            //var dateRange = $scope.date;
+                            $http.get('/api/issues/date/' + $scope.dateR).success(function (issues) {
+                               $scope.issues = issues;
+                               console.log('/api/issues/');
+                            });
+                            console.log($scope.dateR);
+                        }
+                      else {
+                    
+                            if ((category != "-1" && !category)) {
+                                $http.get('/api/issues/' + category + '/' + status).success(function (issues) {
+                    
+                                    $scope.issues = issues;
+                                });
+                            } else {
+                    
+                                if (category != "-1" && !angular.isUndefined(category)) {
+                    
+                                    $http.get('/api/issues/' + category + '/categories').success(function (issues) {
+                    
+                                        $scope.issues = issues;
+                    
+                                    });
+                    
+                                } 
+                    
+                            }
+                    
+                        }
+                    
+                        }); 
+                    }//end searchIssue
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // $scope.searchIssues = function (category, status, startDate, endDate) {
             
-            if ((category == "-1") && (status == "-1")) { //get all records
-                $http.get('/api/issues').success(function (issues) {
-                    $scope.issues = issues;
-                    console.log('/api/issues/');
-                });
+    //         if ((category == "-1") && (status == "-1")) { //get all records
+    //             $http.get('/api/issues').success(function (issues) {
+    //                 $scope.issues = issues;
+    //                 console.log('/api/issues/');
+    //             });
 
-            } else if ((startDate != "-1") && (endDate !=" -1")) {
-                $scope.dateR = {};
-                $scope.dateArray = [];
-                $scope.dateArray.push(startDate);
-                $scope.dateArray.push(endDate);
+    //         } else if ((startDate != "-1") && (endDate !=" -1")) {
+    //             $scope.dateR = {};
+    //             $scope.dateArray = [];
+    //             $scope.dateArray.push(startDate);
+    //             $scope.dateArray.push(endDate);
                 
-                $scope.dateR = JSON.stringify($scope.dateArray);
-                /*$scope.date.endDate = endDate;*/
-                console.log($scope.dateR);
+    //             $scope.dateR = JSON.stringify($scope.dateArray);
+    //             /*$scope.date.endDate = endDate;*/
+    //             console.log($scope.dateR);
                 
-                //var dateRange = $scope.date;
-                $http.get('/api/issues/date/'+ $scope.dateR).success(function (issues) {
-                    $scope.issues = issues;
-                    console.log('/api/issues/');
-                });
-            } else {
+    //             //var dateRange = $scope.date;
+    //             $http.get('/api/issues/date/'+ $scope.dateR).success(function (issues) {
+    //                 $scope.issues = issues;
+    //                 console.log('/api/issues/');
+    //             });
+    //         } else {
 
-                if ((category != "-1" && !category) && (status != "-1" && !status)) {
-                    $http.get('/api/issues/' + category + '/' + status).success(function (issues) {
+    //             if ((category != "-1" && !category) && (status != "-1" && !status)) {
+    //                 $http.get('/api/issues/' + category + '/' + status).success(function (issues) {
 
-                        $scope.issues = issues;
-                    });
-                } else {
+    //                     $scope.issues = issues;
+    //                 });
+    //             } else {
 
-                    if (category != "-1" && !angular.isUndefined(category)) {
+    //                 if (category != "-1" && !angular.isUndefined(category)) {
 
-                        $http.get('/api/issues/' + category + '/categories').success(function (issues) {
+    //                     $http.get('/api/issues/' + category + '/categories').success(function (issues) {
 
-                            $scope.issues = issues;
+    //                         $scope.issues = issues;
 
-                        });
+    //                     });
 
-                    } else if (status != "-1") {
+    //                 } else if (status != "-1") {
 
-                        $http.get('/api/issues/' + status + '/statuses').success(function (issues) {
+    //                     $http.get('/api/issues/' + status + '/statuses').success(function (issues) {
 
-                            $scope.issues = issues;
+    //                         $scope.issues = issues;
 
-                        });
-                    } 
+    //                     });
+    //                 } 
 
-                }
+    //             }
 
-            }
-        };
+    //         }
+    //     };
     $scope.data1 = [];
     
     $http.get('/api/issues/data').success(function(issues) {
