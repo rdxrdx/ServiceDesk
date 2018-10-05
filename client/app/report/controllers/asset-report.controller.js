@@ -2,7 +2,7 @@
 
 angular.module('serviceDeskApp')
 .controller('AssetReportCtrl', function ($scope, $http, $modal, $log, $filter, $location, $window, socket, Auth) {
-
+/*
 	$scope.assestmanagement = [];
 	$scope.currentPage = 1;
 	$scope.pageSize = 10;

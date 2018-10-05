@@ -1,5 +1,5 @@
 'use strict';
-var kue = require('kue'); 
+/*var kue = require('kue'); 
 var queue = kue.createQueue();
 
 var _ = require('lodash');

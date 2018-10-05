@@ -178,7 +178,7 @@ exports.data = function(req, res) {
 
 // Incident Status Reports
 exports.data = function(req, res) {
-	Issue.find().sort(
+/*	Issue.find().sort(
     { 
         issuePriorityId : -1.0
     })
@@ -213,7 +213,7 @@ exports.data = function(req, res) {
         }
 	});
 };
-
+*/
 
 // Get list of visitors
 exports.index = function(req, res) {
@@ -317,6 +317,29 @@ exports.create = function(req, res) {
 		return res.json(201, issue);
 	});
 };
+// Creates a new issue in the DB.
+exports.create = function(req, res) {
+	Issue.create(req.body, function(err, issue) {
+        
+        queue.create('mduze@skhomotech.co.za', {  
+
+        title: 'Testing Issues',
+
+        to: 'mduze@skhomotech.co.za',
+
+        template: 'checking the issue '+ req.body.issueCategory
+
+            
+
+        }).priority('high').attempts(5).save();
+        
+        
+        
+		if(err) { return handleError(res, err); }
+		return res.json(201, issue);
+	});
+};
+
 
 // Updates an existing jobcard in the DB.
 exports.update = function(req, res) {
