@@ -352,9 +352,19 @@ const mailOptions = {
                      from: 'ssmangele.feliciamthembu@gmail.com',// sender address
                        to: 'mohaumofokeng18@gmail.com',// list of receivers
                   subject: 'Subject of your email', // Subject line
-                     html: '<p>Your html here</p>'// plain text body
+                     html: "./client/app/rating"
+                     
+                     
+                     
+                     // plain text body
+                     //MAIL_RATING_TOKEN : mailRatingToken
+             };//console.log(locals)
+        // var templateName = '/star_rating/html' //mail.userConfirmation.sendMail(templateName, locals, null);
+         
+          //mail.userConfirmation.sendMail(req.body.firstName, req.body.email, mailConfirmationToken, null);
+        // mail.userRating.sendMail(user.name, user.email, mailRatingToken, null)
 
-};
+//};
 
 transporter.sendMail(mailOptions,function (err,info) {
 if(err)

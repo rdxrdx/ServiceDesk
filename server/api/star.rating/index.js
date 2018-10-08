@@ -1,7 +1,6 @@
 'use strict';
 
 var express = require('express');
-var nodemailer = require('nodemailer')
 var controller = require('./category.controller');
 var auth = require('../../auth/auth.service');
 
