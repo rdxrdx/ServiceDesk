@@ -154,29 +154,35 @@ angular.module('serviceDeskApp')
             console.log('Report Created!!')
         })
 
-        $scope.searchIssues = function (category, startDate, endDate) {
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        $scope.searchIssues = function (category, startDate, endDa){
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+               
+                $http.get('/api/issues/' + '59673b1434c441b43f3995b4' + '/statuses').success(function (issues) { //Getting all closed Incidents from the API
+                    var IncidentArray = new Array();
+                    IncidentArray = issues ;
+              
+                });
 
-            if ((category == "-1")) {
-            $http.get('/api/issues').success(function (issues) {
-             //get all records
-                for(var t=0;t<issues.length; t++){
-                    if(issues[t].issueStatus.issueStatusName == "Closed")
-                    $scope.issues[t] = issues[t];
-                    console.log("All");
+
+
+                if(category == "-1"){ // Display All closed Incident
+                $http.get('/api/issues/' + '59673b1434c441b43f3995b4' + '/statuses').success(function (issues) { //Getting all closed Incidents from the API
                 
+                $scope.issues = issues ;
+                
+                console.log('/api/issues/' + issues.issueStatus.issueStatusName + '/statuses');
+                });
+            }  else if (category  != "-1") {
+                
+                
+                $http.get('/api/issues/' + category + '/categories').success(function (issues){
+                    $scope.issues = issues;
+                    console.log('/api/issues/'+ category);
+                });
+           
             }
-            
-        });
-    }
-                $http.get('/api/issues').success(function(issues){
-                    for(var t=0; t<issues.length; t++){
-                        if(issues[t].issueCategory._id == category){
-                            $scope.issues = issues;
-                            console.log(issues[t].issueCategory.categoryName);
-                        }
-                    }
-        });
+
+        
                 // if (category == "5915eeb0fb79c3d112afa020") {
                 //     $http.get('/api/issues').success(function (issues) {
                 //         for (var x = 0; x < issues.length; x++) {
