@@ -127,8 +127,10 @@
                                 <th> Date</th>
 								<th> Description</th>
 								<th> Ref Number</th>
-                                <th> SLA</th>
-                                <th> In SLA/ Out SLA</th>								
+								<th> Category</th>
+								<th> Status</th>
+								<th>SLA</th>
+								<th> In SLA/ Out SLA</th>														
                                 <th> Resolution Method</th>
                                 <!--
                                 <th ng-show="getCurrentUser().role != 'Admin'"> Over SLA?</th>-->
@@ -140,7 +142,8 @@
 								<td>{{issue.added | date:'medium'}}</td>
 								<td>{{issue.issueDescription}}</td>
                                 <td>{{issue.issueRefNumber}}</td>
-								
+								<td>{{issue.issueCategory.categoryName}}</td>
+								<td>{{issue.issueStatus.issueStatusName}}</td>
                                 <td>{{issue.issuePriority.prioritySLA}}</td>
                                 
                                 
