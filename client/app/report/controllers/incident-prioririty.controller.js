@@ -29,6 +29,7 @@ angular.module('serviceDeskApp')
                     categoryName: 'All',
                     _id: -1
                 });
+                
                 $scope.categories = categories;
             });
 
@@ -118,8 +119,9 @@ angular.module('serviceDeskApp')
                 var status = itemIds[i].issueStatus.issueStatusName
 
 
-                $scope.issues[i].duration = $scope.resolutionTime($scope.issues[i].added).toFixed(2) + ' Hours';
+                $scope.issues[i].duration = $scope.resolutionTime($scope.issues[i].added, $scope.issues[i].modified).toFixed(2) + ' Hours';
                 //$scope.issues[i].duration = Math.round($scope.resolutionTime($scope.issues[i].added),5) +' Hours';
+                console.log($scope.issues[i].modified);
 
                 itemsArray.push(status);
 
@@ -143,6 +145,28 @@ angular.module('serviceDeskApp')
         });
 
 
+// testing duretion 
+
+$http.get('/api/issues').success(function(issues) {
+    // $scope.issues = issues;
+
+
+    socket.syncUpdates('issue', $scope.issues,function(event,issue,issues){
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
         $http.get('/api/rfc-calls').success(function (rfccalls) {
             $scope.rfccalls = rfccalls;
 
@@ -154,116 +178,63 @@ angular.module('serviceDeskApp')
             console.log('Report Created!!')
         })
 
-        $scope.searchIssues = function (category, startDate, endDa){
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-               
-                $http.get('/api/issues/' + '59673b1434c441b43f3995b4' + '/statuses').success(function (issues) { //Getting all closed Incidents from the API
-                    var IncidentArray = new Array();
-                    IncidentArray = issues ;
-              
-                });
+        $scope.searchIssues = function (category, startDate, endDate) {
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            if (!angular.isUndefined(category) || !angular.isUndefined(startDate) || !angular.isUndefined(endDate)) {
+                // Category On All
+                if (category == "-1") { // Display All closed Incident
+
+                    if (!angular.isUndefined(startDate) && !angular.isUndefined(endDate)) {
+                        $scope.dateR = {};
+                        $scope.dateArray = [];
+                        $scope.dateArray.push(startDate);
+                        $scope.dateArray.push(endDate);
+
+                        $scope.dateR = JSON.stringify($scope.dateArray);
+
+                        $http.get('/api/issues/date/' + $scope.dateR ).success(function (issues) {
+                              $scope.issues = issues; // Display filtered Date difference                                                         
+                            console.log("validated");   
+                        });
+                    } else if (angular.isUndefined(startDate) || angular.isUndefined(endDate)) {
+                        $http.get('/api/issues/' + '59673b1434c441b43f3995b4' + '/statuses').success(function (issues) { //Getting all closed Incidents from the API
+
+                            $scope.issues = issues;
+            
+                        });
+                    }
+                    // Category not All
+                } else if (category != "-1") {
+
+                    if (!angular.isUndefined(startDate) && !angular.isUndefined(endDate)) {
+
+                        $scope.dateR = {};
+                        $scope.dateArray = [];
+                        $scope.dateArray.push(startDate);
+                        $scope.dateArray.push(endDate);
+
+                        $scope.dateR = JSON.stringify($scope.dateArray);
 
 
-
-                if(category == "-1"){ // Display All closed Incident
-                $http.get('/api/issues/' + '59673b1434c441b43f3995b4' + '/statuses').success(function (issues) { //Getting all closed Incidents from the API
-                
-                $scope.issues = issues ;
-                
-                console.log('/api/issues/' + issues.issueStatus.issueStatusName + '/statuses');
-                });
-            }  else if (category  != "-1") {
-                
-                
-                $http.get('/api/issues/' + category + '/categories').success(function (issues){
-                    $scope.issues = issues;
-                    console.log('/api/issues/'+ category);
-                });
-           
-            }
-
-        
-                // if (category == "5915eeb0fb79c3d112afa020") {
-                //     $http.get('/api/issues').success(function (issues) {
-                //         for (var x = 0; x < issues.length; x++) {
-                //             if (issues[x].issueCategory.categoryName == "Software") {
-                //                 $scope.issues[x] = issues[x];
-                //                 console.log(issues[x].issueCategory.categoryName);
-                //             }
-                //         }
-                //     });
-                // } else
-                   
-                        
-                     
-
-            //  else if ((startDate != "-1") || (endDate != "-1")) {
-            //     $scope.dateR = {};
-            //     $scope.dateArray = [];
-            //     $scope.dateArray.push(startDate);
-            //     $scope.dateArray.push(endDate);
-
-            //     $scope.dateR = JSON.stringify($scope.dateArray);
-            //     console.log($scope.dateR);
-
-
-            //     $http.get('/api/issues/date/' + $scope.dateR).success(function (issues) {
-
-            //         if (category == "5915f2466b89705c13d43167") {
-            //             $scope.issues = issues;
-            //             console.log('Business');
-            //         } else if (category == "5915eeb0fb79c3d112afa020") {
-            //             $scope.issues = issues;
-            //             console.log('Software');
-            //         }
-            //     });
-            // }
-            //  else {
-
-            //     if ((category != "-1" || !category)) {
-            //         $http.get('/api/issues/' + category ).success(function (issues) {
-
-            //             $scope.issues = issues;
-            //             console.log('V3');
-            //         });
-            //     } else {
-
-            //         if (category != "-1" || !angular.isUndefined(category)) {
-
-            //             $http.get('/api/issues/' + category + '/categories').success(function (issues) {
-
-            //                 $scope.issues = issues;
-            //                 console.log('V4');
-
-            //             });
-
-            //         } else if (category != "-1" && startDate != "-1" && endDate != "-1") {
-            //             $scope.dateR = {};
-            //             $scope.dateArray = [];
-            //             $scope.dateArray.push(startDate);
-            //             $scope.dateArray.push(endDate);
-
-            //             $scope.dateR = JSON.stringify($scope.dateArray);
-            //             console.log("validated");
-            //             $http.get('/api/issues/date/' + $scope.dateR).success(function (issues) {
-            //                 $scope.issues = issues;
-
-            //             });
-            //         }
-
-            //  else if (status != "-1") {
-
-            //     $http.get('/api/issues/' + status + '/statuses').success(function (issues) {
-
-            //         $scope.issues = issues;
-
-            //     });
-            // } 
-
-            //     }
-
-            // }
-
+                        $http.get('/api/issues/date/' + $scope.dateR ).success(function (issues) {
+                            // $scope.issues = issues; // Display filtered Date difference
+                           
+                                    $scope.issues = issues;
+                                    console.log('date category');
+                                
+                            
+                        });
+                    } else if (angular.isUndefined(startDate) || angular.isUndefined(endDate)) {
+                        $http.get( '/api/issues/' + category + '/' + '59673b1434c441b43f3995b4' ) .success(function (issues) {
+                            $scope.issues = issues; // Display filtered Category
+                            console.log('filtered');
+                             //$http.get('/api/issues/' + category + '/' + status).success(function (issues) {
+                          
+                        });
+                    }
+                }
+            }    
 
         };//end searchIssue
 
@@ -382,11 +353,14 @@ angular.module('serviceDeskApp')
         $scope.issue = {};
         $scope.priority = {};
 
-        $scope.resolutionTime = function (dateCaptured) {
-            var now = moment(new Date()); //todays date
+        $scope.resolutionTime = function (dateCaptured,modified) {
+
+            var now = moment(modified); //todays date
+            console.log('modified',modified);
             var duration = moment.duration(now.diff(dateCaptured));
-            var hours = duration.asHours();
-            return hours;
+            duration = duration.asHours();
+            console.log('see hours',duration);
+            return duration;
         }
 
         $scope.cancel = function () {

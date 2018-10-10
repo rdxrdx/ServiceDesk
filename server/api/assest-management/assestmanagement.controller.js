@@ -7,102 +7,138 @@ var Assest = require('./assestmanagement.model');
 
 
 // Get list of visitors
-exports.index = function(req, res) {
-Assest.find()
-    .populate('assetCategory','categoryName')
-    .populate('departments','departmentName')
-    .populate('assetstatuses','assetstatusName')
-    .populate('users','firstName')
-    .exec(function (err, assestmanagements) {
-if(err) { return handleError(res, err); }
-return res.json(200, assestmanagements);
-});
+exports.index = function (req, res) {
+    Assest.find()
+        .populate('assetCategory', 'categoryName')
+        .populate('departments', 'departmentName')
+        .populate('assetstatuses', 'assetstatusName')
+        .populate('users', 'firstName')
+        .exec(function (err, assestmanagements) {
+            if (err) { return handleError(res, err); }
+            return res.json(200, assestmanagements);
+        });
 };
 
 
 // Get list of visitors chart data
-exports.assetreport = function(req, res) {
-Assest.find()
-    .populate('assetCategory','categoryName')
-    .populate('departments','departmentName')
-    .populate('assetstatuses','assetstatusName')
-    .populate('users','firstName')
-    .exec(function (err, items) {
-    if(err) { return handleError(res, err); }
-        else {
-            var temp = items.reduce(function(p,c){
-                var defaultValue = {
-                x: c.assetCategory.categoryName,
-                y: 0
-                };
-                p[c.assetCategory.categoryName] = p[c.assetCategory.categoryName] || defaultValue
-                p[c.assetCategory.categoryName].y++;
-                
-                return p;
-            }, {});
-            
-            var result = [];
-            for( var k in temp ){
-                result.push(temp[k]);
-            }
-            console.log(result)
-            return res.json(200, result);
-            
-        }
-});
-};
+// exports.assetreport = function(req, res) {
+// Assest.find()
+//     .populate('assetCategory','categoryName')
+//     .populate('departments','departmentName')
+//     .populate('assetstatuses','assetstatusName')
+//     .populate('users','firstName')
+//     .exec(function (err, items) {
+//     if(err) { return handleError(res, err); }
+//         else {
+//             var temp = items.reduce(function(p,c){
+//                 var defaultValue = {
+//                 x: c.assetCategory.categoryName,
+//                 y: 0
+//                 };
+//                 p[c.assetCategory.categoryName] = p[c.assetCategory.categoryName] || defaultValue
+//                 p[c.assetCategory.categoryName].y++;
 
+//                 return p;
+//             }, {});
+
+//             var result = [];
+//             for( var k in temp ){
+//                 result.push(temp[k]);
+//             }
+//             console.log(result)
+//             return res.json(200, result);
+
+//         }
+// });
+// };
+
+exports.assetreport = function (req, res) {
+    Issue.find().sort(
+        {
+            issuePriorityId: -1.0
+        })
+        .populate('issueCategory', 'categoryName categoryId')
+        .populate('issueStatus', 'issueStatusName issueStatusId')
+        .populate('issueChannel', 'channelName channelId')
+        .populate('issuePriority', 'priorityName prioritySLA priorityId')
+        .populate('issueDivision', 'divisionName divisionId')
+        .populate('issueUser', 'firstName')
+        .exec(function (err, issues) {
+            var items = issues;
+            if (err) { return handleError(res, err); }
+            else {
+                var temp = items.reduce(function (p, c) {
+                    var defaultValue = {
+                        x: c.issueStatus.issueStatusName,
+                        y: 0
+                    };
+                    p[c.issueStatus.issueStatusName] = p[c.issueStatus.issueStatusName] || defaultValue
+                    p[c.issueStatus.issueStatusName].y++;
+
+                    return p;
+                }, {});
+
+                var result = [];
+                for (var k in temp) {
+                    result.push(temp[k]);
+                }
+                console.log(result)
+                return res.json(200, result);
+
+            }
+        });
+};
 
 // Get list of visitors
-exports.index = function(req, res) {
- 
-Assest.find()
-   
-.populate('assetCategory','categoryName')
-.populate('departments','departmentName')
-    .populate('assetstatuses','assetstatusName')
-     .populate('users','firstName')
+exports.index = function (req, res) {
 
-    .exec(function (err, assestmanagements) {
-var itemsArray = []
-var itemIds = assestmanagements
-for (var i = 0; i < assestmanagements.length; i++) {
-var status =itemIds[i].assetCategory.categoryName
-itemsArray.push(status);
-if(itemIds.length === itemsArray.length){
-console.log(itemsArray)
-var counts = {}, i, value;
-for (i = 0; i < itemsArray.length; i++) {
-value = itemsArray[i];
-if (typeof counts[value] === "undefined") {
-counts[value] = 1;
-} else {
-counts[value]++;
-}
-}
-console.log(counts);
-}
-};
-if(err) { return handleError(res, err); }
-return res.json(200, assestmanagements);
-});
+    Assest.find()
+
+        .populate('assetCategory', 'categoryName')
+        .populate('departments', 'departmentName')
+        .populate('assetstatuses', 'assetstatusName')
+        .populate('users', 'firstName')
+
+        .exec(function (err, assestmanagements) {
+            var itemsArray = []
+            var itemIds = assestmanagements
+            for (var i = 0; i < assestmanagements.length; i++) {
+                var status = itemIds[i].assetCategory
+                itemsArray.push(status);
+                if (itemIds.length === itemsArray.length) {
+                    console.log(itemsArray)
+                    var counts = {}, i, value;
+                    for (i = 0; i < itemsArray.length; i++) {
+                        value = itemsArray[i];
+                        if (typeof counts[value] === "undefined") {
+                            counts[value] = 1;
+                        } else {
+                            counts[value]++;
+                        }
+                    }
+                    console.log(counts);
+                }
+            };
+            if (err) { return handleError(res, err); }
+            return res.json(200, assestmanagements);
+        });
 };
 
 // Get a single issue
 
 
-exports.show = function(req, res) {
-Assest.findById({
-_id:req.params.id
-}).sort({added:1})
-.populate('assetCategory','categoryName')
-.populate('departments','departmentName')
-    .populate('assetstatuses','assetstatusName')
-    .populate('users','firstName')
-.exec(function (err, assestmanagements) {
-if(err) { return handleError(res, err); }
-return res.json(200, assestmanagements)
-});
+exports.show = function (req, res) {
+    Assest.findById({
+        _id: req.params.id
+    }).sort({ added: 1 })
+        .populate('assetCategory', 'categoryName')
+        .populate('departments', 'departmentName')
+        .populate('assetstatuses', 'assetstatusName')
+        .populate('users', 'firstName')
+        .exec(function (err, assestmanagements) {
+            if (err) { return handleError(res, err); }
+            return res.json(200, assestmanagements)
+        });
 };
 
 
@@ -114,52 +150,52 @@ return res.json(200, assestmanagements)
 
 
 // Search Issue
-exports.searchAssestmanagements = function(req, res) {
-Assest.find({
-assetCategory:req.params.category,
-departments:req.params.departments
-}).sort({added:1})
-  .populate('assetCategory','categoryName')
-  .populate('departments','departmentName')
-  .populate('assetstatuses','assetstatusName')
-      .populate('users','firstName')
-  
-    .exec(function (err, assestmanagements) {
-if(err) { return handleError(res, err); }
-return res.json(200, assestmanagements);
-});
+exports.searchAssestmanagements = function (req, res) {
+    Assest.find({
+        assetCategory: req.params.category,
+        departments: req.params.departments
+    }).sort({ added: 1 })
+        .populate('assetCategory', 'categoryName')
+        .populate('departments', 'departmentName')
+        .populate('assetstatuses', 'assetstatusName')
+        .populate('users', 'firstName')
+
+        .exec(function (err, assestmanagements) {
+            if (err) { return handleError(res, err); }
+            return res.json(200, assestmanagements);
+        });
 };
 
 
 // Search Issue By Category
-exports.showAssestmanagementsByCategory = function(req, res) {
-Assest.find({
-assetCategory:req.params.category
-}).sort({added:1})
-.populate('assetCategory','categoryName')
-.populate('departments','departmentName')
-.populate('assetstatuses','assetstatusName')
-    .populate('users','firstName')
-  .exec(function (err, assestmanagements) {
-if(err) { return handleError(res, err); }
-return res.json(200, assestmanagements);
-});
+exports.showAssestmanagementsByCategory = function (req, res) {
+    Assest.find({
+        assetCategory: req.params.category
+    }).sort({ added: 1 })
+        .populate('assetCategory', 'categoryName')
+        .populate('departments', 'departmentName')
+        .populate('assetstatuses', 'assetstatusName')
+        .populate('users', 'firstName')
+        .exec(function (err, assestmanagements) {
+            if (err) { return handleError(res, err); }
+            return res.json(200, assestmanagements);
+        });
 };
 
 // Search Issues By Status
-exports.showJobAssestmanagementsByStatus = function(req, res) {
-Assest.find({
-assetstatuses:req.params.status
-}).sort({added:1})
-  .populate('assetCategory','categoryName')
-  .populate('departments','departmentName')
-  .populate('assetstatuses','assetstatusName')
-      .populate('users','firstName')
-  
-    .exec(function (err, assestmanagements) {
-if(err) { return handleError(res, err); }
-return res.json(200, assestmanagements);
-});
+exports.showJobAssestmanagementsByStatus = function (req, res) {
+    Assest.find({
+        assetstatuses: req.params.status
+    }).sort({ added: 1 })
+        .populate('assetCategory', 'categoryName')
+        .populate('departments', 'departmentName')
+        .populate('assetstatuses', 'assetstatusName')
+        .populate('users', 'firstName')
+
+        .exec(function (err, assestmanagements) {
+            if (err) { return handleError(res, err); }
+            return res.json(200, assestmanagements);
+        });
 };
 
 

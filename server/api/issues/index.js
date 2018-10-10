@@ -19,6 +19,7 @@ router.get('/date/:dateRange', auth.isAuthenticated(), controller.showJobIssuesB
 router.get('/prioritisation/:status', auth.isAuthenticated(), controller.prioritisation)
 
 router.get('/:status/statuses', auth.isAuthenticated(), controller.showJobIssuesByStatus);
+ router.get('/:status/closed', auth.isAuthenticated(), controller.showClosedIssuesByCategory);
 
 router.get('/:category/:status', auth.isAuthenticated(), controller.searchIssues);
 router.post('/', auth.isAuthenticated(), controller.create);

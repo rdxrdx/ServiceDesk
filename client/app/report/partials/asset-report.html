@@ -63,11 +63,12 @@ Add New
 					<div class="ibox-content table-responsive" id="exportable">
                         <table class="table" class="row-border hover" id="exportable">
                             <tr>
-                                <th>Date</th>
-                                <th>Resource Family</th>
+                                <th>purchase Date</th>
+                                <th>Category</th>
                                 <th>Asset Type</th>
                                 <th>Serial Number</th>
                                 <th>Description</th>
+                                <th>Department</th>
                             </tr>
                             <tr dir-paginate="assestmanagement in assestmanagements| filter:q | itemsPerPage: pageSize" current-page="currentPage" pagination-id="assestmanagement">
                                 <td>{{assestmanagement.purchaseDate}}</td>
@@ -75,6 +76,8 @@ Add New
                                 <td>{{assestmanagement.type}}</td>
                                 <td>{{assestmanagement.serialNumber}}</td>
                                 <td>{{assestmanagement.description}}</td>
+                                <td>{{assestmanagement.departments.departmentName}}</td>
+
                             </tr>
                         </table>
                     </div>

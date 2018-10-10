@@ -441,6 +441,30 @@ exports.showIssuesByCategory = function(req, res) {
 	});
 };
 
+
+// find by closed and categort
+
+exports.showClosedIssuesByCategory = function(req, res) {
+	Issue.find({
+        issueCategory:req.params.category,
+        issueStatus:req.params.status
+	}).sort(
+    { 
+        "issuePriorityId" : -1.0
+    })
+	.populate('issueCategory','categoryName categoryId')
+    .populate('issueStatus','issueStatusName issueStatusId')
+    .populate('issueChannel','channelName channelId')
+    .populate('issuePriority','priorityName prioritySLA priorityId')
+    .populate('issueDivision','divisionName divisionId')
+    .populate('issueUser','firstName')
+    .populate('reportedBy','firstName')
+  .exec(function (err, issues) {
+		if(err) { return handleError(res, err); }
+		return res.json(200, issues);
+	});
+};
+
 // Search Issues By Status
 exports.showJobIssuesByStatus = function(req, res) {
 	Issue.find({
