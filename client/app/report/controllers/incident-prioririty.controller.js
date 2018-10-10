@@ -29,7 +29,7 @@ angular.module('serviceDeskApp')
                     categoryName: 'All',
                     _id: -1
                 });
-                
+
                 $scope.categories = categories;
             });
 
@@ -145,15 +145,15 @@ angular.module('serviceDeskApp')
         });
 
 
-// testing duretion 
+        // testing duretion 
 
-$http.get('/api/issues').success(function(issues) {
-    // $scope.issues = issues;
+        $http.get('/api/issues').success(function (issues) {
+            // $scope.issues = issues;
 
 
-    socket.syncUpdates('issue', $scope.issues,function(event,issue,issues){
-    });
-});
+            socket.syncUpdates('issue', $scope.issues, function (event, issue, issues) {
+            });
+        });
 
 
 
@@ -183,8 +183,8 @@ $http.get('/api/issues').success(function(issues) {
 
             if (!angular.isUndefined(category) || !angular.isUndefined(startDate) || !angular.isUndefined(endDate)) {
                 // Category On All
-                if (category == "-1") { // Display All closed Incident
-
+                if (category == "-1") {
+                    // when date is defined
                     if (!angular.isUndefined(startDate) && !angular.isUndefined(endDate)) {
                         $scope.dateR = {};
                         $scope.dateArray = [];
@@ -193,20 +193,21 @@ $http.get('/api/issues').success(function(issues) {
 
                         $scope.dateR = JSON.stringify($scope.dateArray);
 
-                        $http.get('/api/issues/date/' + $scope.dateR ).success(function (issues) {
-                              $scope.issues = issues; // Display filtered Date difference                                                         
-                            console.log("validated");   
+                        $http.get('/api/issues/date/' + $scope.dateR + '/' + '59673b1434c441b43f3995b4').success(function (issues) {
+                            $scope.issues = issues; // Display filtered Date difference                                                         
+                            console.log("Date filter: ", $scope.issues);
                         });
-                    } else if (angular.isUndefined(startDate) || angular.isUndefined(endDate)) {
-                        $http.get('/api/issues/' + '59673b1434c441b43f3995b4' + '/statuses').success(function (issues) { //Getting all closed Incidents from the API
+                    } else if (angular.isUndefined(startDate) || angular.isUndefined(endDate)) { //Display all closed incidents when date is undefined
+                        $http.get('/api/issues/' + '59673b1434c441b43f3995b4' + '/statuses').success(function (issues) {
 
                             $scope.issues = issues;
-            
+                            console.log('All closed incidents')
+
                         });
                     }
                     // Category not All
                 } else if (category != "-1") {
-
+                    // when date is defined
                     if (!angular.isUndefined(startDate) && !angular.isUndefined(endDate)) {
 
                         $scope.dateR = {};
@@ -217,82 +218,40 @@ $http.get('/api/issues').success(function(issues) {
                         $scope.dateR = JSON.stringify($scope.dateArray);
 
 
-                        $http.get('/api/issues/date/' + $scope.dateR ).success(function (issues) {
-                            // $scope.issues = issues; // Display filtered Date difference
-                           
-                                    $scope.issues = issues;
-                                    console.log('date category');
-                                
-                            
+                        $http.get('/api/issues/date/' + $scope.dateR + '/' + category + '/' + '59673b1434c441b43f3995b4').success(function (issues) {
+
+
+                            $scope.issues = issues;
+                            console.log("category, date Filter: ", $scope.issues);
+
+
                         });
                     } else if (angular.isUndefined(startDate) || angular.isUndefined(endDate)) {
-                        $http.get( '/api/issues/' + category + '/' + '59673b1434c441b43f3995b4' ) .success(function (issues) {
+                        $http.get('/api/issues/' + category + '/' + '59673b1434c441b43f3995b4').success(function (issues) {
                             $scope.issues = issues; // Display filtered Category
-                            console.log('filtered');
-                             //$http.get('/api/issues/' + category + '/' + status).success(function (issues) {
-                          
+                            console.log('category filter', $scope.issues);
+
                         });
                     }
-                }
-            }    
+                } 
+            } else if (angular.isUndefined(category) && !angular.isUndefined(startDate) && !angular.isUndefined(endDate)) {
+                $scope.dateR = {};
+                $scope.dateArray = [];
+                $scope.dateArray.push(startDate);
+                $scope.dateArray.push(endDate);
+
+                $scope.dateR = JSON.stringify($scope.dateArray);
+
+                $http.get('/api/issues/date/' + $scope.dateR + '/' + '59673b1434c441b43f3995b4').success(function (issues) {
+                    $scope.issues = issues; // Display filtered Date difference                                                         
+                    console.log("Date filter: ", $scope.issues);
+                });
+            }
 
         };//end searchIssue
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // $scope.searchIssues = function (category, status, startDate, endDate) {
-
-        //         if ((category == "-1") && (status == "-1")) { //get all records
-        //             $http.get('/api/issues').success(function (issues) {
-        //                 $scope.issues = issues;
-        //                 console.log('/api/issues/');
-        //             });
-
-        //         } else if ((startDate != "-1") && (endDate !=" -1")) {
-        //             $scope.dateR = {};
-        //             $scope.dateArray = [];
-        //             $scope.dateArray.push(startDate);
-        //             $scope.dateArray.push(endDate);
-
-        //             $scope.dateR = JSON.stringify($scope.dateArray);
-        //             /*$scope.date.endDate = endDate;*/
-        //             console.log($scope.dateR);
-
-        //             //var dateRange = $scope.date;
-        //             $http.get('/api/issues/date/'+ $scope.dateR).success(function (issues) {
-        //                 $scope.issues = issues;
-        //                 console.log('/api/issues/');
-        //             });
-        //         } else {
-
-        //             if ((category != "-1" && !category) && (status != "-1" && !status)) {
-        //                 $http.get('/api/issues/' + category + '/' + status).success(function (issues) {
-
-        //                     $scope.issues = issues;
-        //                 });
-        //             } else {
-
-        //                 if (category != "-1" && !angular.isUndefined(category)) {
-
-        //                     $http.get('/api/issues/' + category + '/categories').success(function (issues) {
-
-        //                         $scope.issues = issues;
-
-        //                     });
-
-        //                 } else if (status != "-1") {
-
-        //                     $http.get('/api/issues/' + status + '/statuses').success(function (issues) {
-
-        //                         $scope.issues = issues;
-
-        //                     });
-        //                 } 
-
-        //             }
-
-        //         }
-        //     };
         $scope.data1 = [];
 
         $http.get('/api/issues/data').success(function (issues) {
@@ -353,13 +312,13 @@ $http.get('/api/issues').success(function(issues) {
         $scope.issue = {};
         $scope.priority = {};
 
-        $scope.resolutionTime = function (dateCaptured,modified) {
+        $scope.resolutionTime = function (dateCaptured, modified) {
 
             var now = moment(modified); //todays date
-            console.log('modified',modified);
+            console.log('modified', modified);
             var duration = moment.duration(now.diff(dateCaptured));
             duration = duration.asHours();
-            console.log('see hours',duration);
+            console.log('see hours', duration);
             return duration;
         }
 

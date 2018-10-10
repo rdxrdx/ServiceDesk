@@ -150,7 +150,7 @@
 								<td ng-click="open(issue)">
 									<a title="View Details"><span class="glyphicon glyphicon-list"></span></a>
 								</td>
-								<td ng-show="getCurrentUser().role == 'Service Desk Senior Manager' || getCurrentUser().role == 'Service Desk Agent'">
+								<td ng-show="getCurrentUser().role == 'Service Desk Senior Manager' || getCurrentUser().role == 'Service Desk Agent' || getCurrentUser().role == 'Technician'">
 									<a href="issues/edit/{{issue._id}}" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
 								</td>
 								<td ng-click="comments(issue)">
