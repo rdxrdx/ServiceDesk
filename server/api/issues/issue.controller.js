@@ -4,7 +4,9 @@ var queue = kue.createQueue();
 
 var _ = require('lodash');
 var Issue = require('./issue.model');
-var nodemailer = require('nodemailer')
+var nodemailer = require('nodemailer');
+var Templation  = require('nodemailer-templation');
+var path        = require('path');
 
 
 //kue
@@ -301,11 +303,8 @@ exports.create = function(req, res) {
 	Issue.create(req.body, function(err, issue) {
         
         queue.create('mduze@skhomotech.co.za', {  
-
-        title: 'Testing Issues',
-
-        to: 'mduze@skhomotech.co.za',
-
+         title: 'Testing Issues',
+            to: 'mduze@skhomotech.co.za',
         template: 'checking the issue '+ req.body.issueDescription
 
             
@@ -348,23 +347,68 @@ auth: {
 
 });
 
-const mailOptions = {
+var mailOptions = {
                      from: 'ssmangele.feliciamthembu@gmail.com',// sender address
                        to: 'mohaumofokeng18@gmail.com',// list of receivers
-                  subject: 'Subject of your email', // Subject line
-                     html: "./client/app/rating"
-                     
-                     
+                  subject: 'Service Rating', 
+                  COMPANY: 'Service Desk',
+                  RATING_URL : 'http://localhost:8080/rating',
+                  MAIL_RATING_TOKEN : 'mailRatingToken'
+                  // Subject line
+                    //  html: '<!DOCTYPE html>'+
+                    //  '<head><script data-require="angular.js@*" data-semver="1.5.0" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js">'
+                    //  + '</script><script src="https://code.angularjs.org/1.5.0/angular-animate.min.js"></script>' + 
+                    //  '<script src="https://code.angularjs.org/1.5.0/angular-aria.min.js"></script>' + 
+                    //  '<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.js"></script>' + 
+                    //  '<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.css" />' + 
+                    //  '<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">' + 
+                    //  '<link rel="stylesheet" href="app\rating\jk.rating.min.css" />' + 
+                    //  '<link rel="stylesheet" href="app\rating\rating.css" />' + 
+                    //  '<script src="app\rating\jk.rating.min.js"></script>' + 
+                    //  '<script src="script.js"></script></head>'+
+                    //  '<body ng-controller="MyCtrl" style="padding: 20px" ><div layout="column">' + '<div style="width: 100px">{{secondRate}} Stars</div>' +
+                    //  '<a><h3>Star Rating</h3><jk-rating-stars max-rating="7" rating="secondRate" on-rating="onItemRating(rating)"></jk-rating-stars></a>' +
+                    //  '<img src="http://www.pnet.co.za/upload_za/logo/S/logoSkhomo-Technologies-18249ZEN.gif" alt="" width="160">'+
+                    //  '<p>Thank you for using our services.</p>'+
+                    // '<a><button>Rating</button></a>'+
+                    //  '<p>Name: {{Username}}  </p>',
+                    //   filename: 'rating',
+                    //   path: ".app\rating\rating.js"
+                       //cid: 'unique@kreata.ee' //same cid value as in the html img src
+                    };
+        // var locals = {
+        //                 email:user.email,
+        //                 name:user.name,
+        //                 COMPANY: 'Service Desk',
+        //                 RATING_URL : 'http://localhost:8080/rating',
+        //                 MAIL_RATING_TOKEN : mailRatingToken
+        //               };
+        //           //console.log(locals)
+        //           var templateName = '/star_rating/html';
+        //           //mail.userConfirmation.sendMail(templateName, locals, null);
+                  
+        //            //mail.userConfirmation.sendMail(req.body.firstName, req.body.email, mailConfirmationToken, null);
+        //           mail.userRating.sendMail(user.name, user.email, mailRatingToken, null)
+      
+        //        });
+        var templateName = '/star_rating/html';
+
+        transporter.sendMail(mailOptions, null)
+ //var Mailer = new Templation({
+            // templates: {
+                        //  reply:  '.\client\app\rating'
+                       // }
                      
                      // plain text body
                      //MAIL_RATING_TOKEN : mailRatingToken
-             };//console.log(locals)
+       
+    //console.log(locals)
         // var templateName = '/star_rating/html' //mail.userConfirmation.sendMail(templateName, locals, null);
          
           //mail.userConfirmation.sendMail(req.body.firstName, req.body.email, mailConfirmationToken, null);
         // mail.userRating.sendMail(user.name, user.email, mailRatingToken, null)
 
-//};
+});
 
 transporter.sendMail(mailOptions,function (err,info) {
 if(err)
@@ -392,10 +436,10 @@ issue);
 
         });
 
-    });
-
 };
 
+
+//});
 
 
 
