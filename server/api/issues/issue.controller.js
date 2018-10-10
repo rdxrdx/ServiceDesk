@@ -353,7 +353,7 @@ var mailOptions = {
                   subject: 'Service Rating', 
                   COMPANY: 'Service Desk',
                   RATING_URL : 'http://localhost:8080/rating',
-                  MAIL_RATING_TOKEN : 'mailRatingToken'
+                 // MAIL_RATING_TOKEN : 'mailRatingToken'
                   // Subject line
                     //  html: '<!DOCTYPE html>'+
                     //  '<head><script data-require="angular.js@*" data-semver="1.5.0" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js">'
@@ -391,9 +391,9 @@ var mailOptions = {
         //           mail.userRating.sendMail(user.name, user.email, mailRatingToken, null)
       
         //        });
-        var templateName = '/star_rating/html';
+        //var templateName = '/star_rating/html';
 
-        transporter.sendMail(mailOptions, null)
+    transporter.sendMail(mailOptions, null)
  //var Mailer = new Templation({
             // templates: {
                         //  reply:  '.\client\app\rating'
