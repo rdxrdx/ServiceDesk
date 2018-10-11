@@ -352,26 +352,24 @@ var mailOptions = {
                        to: 'mohaumofokeng18@gmail.com',// list of receivers
                   subject: 'Service Rating', 
                   COMPANY: 'Service Desk',
-                  RATING_URL : 'http://localhost:8080/rating',
-                 // MAIL_RATING_TOKEN : 'mailRatingToken'
-                  // Subject line
-                    //  html: '<!DOCTYPE html>'+
-                    //  '<head><script data-require="angular.js@*" data-semver="1.5.0" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js">'
-                    //  + '</script><script src="https://code.angularjs.org/1.5.0/angular-animate.min.js"></script>' + 
-                    //  '<script src="https://code.angularjs.org/1.5.0/angular-aria.min.js"></script>' + 
-                    //  '<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.js"></script>' + 
-                    //  '<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.css" />' + 
-                    //  '<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">' + 
-                    //  '<link rel="stylesheet" href="app\rating\jk.rating.min.css" />' + 
-                    //  '<link rel="stylesheet" href="app\rating\rating.css" />' + 
+                  RATING_URL : 'http://localhost:8080/confirm',
+                         html: '<!DOCTYPE html>'+
+                     '<head><script data-require="angular.js@*" data-semver="1.5.0" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js">'
+                     + '</script><script src="https://code.angularjs.org/1.5.0/angular-animate.min.js"></script>' + 
+                     '<script src="https://code.angularjs.org/1.5.0/angular-aria.min.js"></script>' + 
+                     '<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.js"></script>' + 
+                     '<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.css" />' + 
+                     '<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">' + 
+                     '<link rel="stylesheet" href="app\rating\jk.rating.min.css" />' + 
+                     '<link rel="stylesheet" href="app\rating\rating.css" />' + 
                     //  '<script src="app\rating\jk.rating.min.js"></script>' + 
                     //  '<script src="script.js"></script></head>'+
-                    //  '<body ng-controller="MyCtrl" style="padding: 20px" ><div layout="column">' + '<div style="width: 100px">{{secondRate}} Stars</div>' +
-                    //  '<a><h3>Star Rating</h3><jk-rating-stars max-rating="7" rating="secondRate" on-rating="onItemRating(rating)"></jk-rating-stars></a>' +
-                    //  '<img src="http://www.pnet.co.za/upload_za/logo/S/logoSkhomo-Technologies-18249ZEN.gif" alt="" width="160">'+
-                    //  '<p>Thank you for using our services.</p>'+
-                    // '<a><button>Rating</button></a>'+
-                    //  '<p>Name: {{Username}}  </p>',
+                     '<body ng-controller="MyCtrl" style="padding: 20px" ><div layout="column">' + '<div style="width: 100px">{{secondRate}} Stars</div>' +
+                     '<a><h3>Star Rating</h3><jk-rating-stars max-rating="7" rating="secondRate" on-rating="onItemRating(rating)"></jk-rating-stars></a>' +
+                     '<img src="http://www.pnet.co.za/upload_za/logo/S/logoSkhomo-Technologies-18249ZEN.gif" alt="" width="160">'+
+                     '<p>Thank you for using our services.</p>'+
+                     '<a><star-rating></star-rating</a>'
+                     //'<p>Name: {{Username}}  </p>',
                     //   filename: 'rating',
                     //   path: ".app\rating\rating.js"
                        //cid: 'unique@kreata.ee' //same cid value as in the html img src
