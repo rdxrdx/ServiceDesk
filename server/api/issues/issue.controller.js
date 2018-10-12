@@ -355,27 +355,18 @@ var mailOptions = {
                   COMPANY: 'Service Desk',
                 //   CONFIRMATION_URL : 'http://localhost:8080/rating',
 				//   MAIL_CONFIRMATION_TOKEN : mailConfirmationToken,
-                    html: '<!DOCTYPE html>'+
-                     '<head><script data-require="angular.js@*" data-semver="1.5.0" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js">'
-                     + '</script><script src="https://code.angularjs.org/1.5.0/angular-animate.min.js"></script>' + 
-                     '<script src="https://code.angularjs.org/1.5.0/angular-aria.min.js"></script>' + 
-                     '<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.js"></script>' + 
-                     '<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.css" />' + 
-                     '<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">' + 
-                     '<link rel="stylesheet" href="app\rating\jk.rating.min.css" />' + 
-                     '<link rel="stylesheet" href="app\rating\rating.css" />' + 
-                     '<img src="http://www.pnet.co.za/upload_za/logo/S/logoSkhomo-Technologies-18249ZEN.gif" alt="" width="160">' +
-                     '<body><title>Creating A form</title>' + '<style>input[type=text]{width : 50%;border:2px solid #aaa;margin:8px 0;outline :none;padding : 8px;box-sizing :border-box;transition:3s;}input[type=text]:focus{border-color:dodgerBlue;box-shadow:0 0 8px 0 dodgerBlue;}</style>' +
-                     ' <div><tr><h3>Overrall how Dissatisfied or Satisfied are you with the system</h3><form> </tr></div>' +
-                     '<input type="radio" name="sname" value="sname"/><br>Very Satisfying<input type="radio" name="sname" value="sname"/>Somewhat Satisfying<input type="radio" name="sname" value="sname"/>Very Dissatisfied<input type="radio" name="sname" value="sname"/>Neutral<input type="radio" name="sname" value="sname"/>Bad<input type="radio" name="sname" value="sname"color:"red"/>Worse<br>' +
+                    html: '<!DOCTYPE html>'+ 
+                     '<img src="http://www.pnet.co.za/upload_za/logo/S/logoSkhomo-Technologies-18249ZEN.gif" alt="" width="180">' +
+                     '<body>' + '<form>' +
+                     '<h3>Overrall how Dissatisfied or Satisfied are you with the system</h3><input type="radio" name="sname" value="sname"/><br>Very Satisfying<input type="radio" name="sname" value="sname"/>Somewhat Satisfying<input type="radio" name="sname" value="sname"/>Very Dissatisfied<input type="radio" name="sname" value="sname"/>Neutral<input type="radio" name="sname" value="sname"/>Bad<input type="radio" name="sname" value="sname"color:"red"/>Worse<br>' +
                      '<h3>Overrall how Dissatisfied or Satisfied are you with the system</h3><input type="radio" name="sname" value="sname"/>Very Satisfying<input type="radio" name="sname" value="sname"/>Somewhat Satisfying<input type="radio" name="sname" value="sname"/>Very Dissatisfied<input type="radio" name="sname" value="sname"/>Neutral<input type="radio" name="sname" value="sname"/>Bad<input type="radio" name="sname" value="sname"/>Worse<br>' +
                      '<h3>Overrall how Dissatisfied or Satisfied are you with the system</h3><input type="radio" name="sname" value="sname"/>Very Satisfying<input type="radio" name="sname" value="sname"/>Somewhat Satisfying<input type="radio" name="sname" value="sname"/>Very Dissatisfied<input type="radio" name="sname" value="sname"/>Neutral<input type="radio" name="sname" value="sname"/>Bad<input type="radio" name="sname" value="sname"/>Worse<br>' +
-                      '<h3>Overrall how Dissatisfied or Satisfied are you with the system</h3><input type="radio" name="sname" value="sname"/>Very Satisfying<input type="radio" name="sname" value="sname"/>Somewhat Satisfying<input type="radio" name="sname" value="sname"/>Very Dissatisfied<input type="radio" name="sname" value="sname"/>Neutral<input type="radio" name="sname" value="sname"/>Bad<input type="radio" name="sname" value="sname"/>Worse<br>' +
-                      '<h3>Any suggestions</h3><input type="text" placeholder="suggestions">' + '<br>' +
-                      '<input type="submit" value="Submit" <a> href="https://www.w3schools.com" target="iframe_a">W3Schools.com </a>  <br>' + 
-                      '</form></body>'
+                     '<h3>Overrall how Dissatisfied or Satisfied are you with the system</h3><input type="radio" name="sname" value="sname"/>Very Satisfying<input type="radio" name="sname" value="sname"/>Somewhat Satisfying<input type="radio" name="sname" value="sname"/>Very Dissatisfied<input type="radio" name="sname" value="sname"/>Neutral<input type="radio" name="sname" value="sname"/>Bad<input type="radio" name="sname" value="sname"/>Worse<br>' +
+                     '<h3>Any suggestions</h3><input type="text" placeholder="suggestions">' + '<br>' + '<br>'+
+                     '<input type="submit" value="Submit"> <br>' + 
+                     '</form></body>'
 };
-                    transporter.sendMail(mailOptions, null)
+                    transporter.sendMail(mailOptions, null) 
  
 });
 
