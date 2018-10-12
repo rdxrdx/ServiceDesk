@@ -145,7 +145,6 @@ angular.module('serviceDeskApp')
         });
 
 
-        // testing duretion 
 
         $http.get('/api/issues').success(function (issues) {
             // $scope.issues = issues;
@@ -179,73 +178,97 @@ angular.module('serviceDeskApp')
         })
 
         $scope.searchIssues = function (category, startDate, endDate) {
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             if (!angular.isUndefined(category) || !angular.isUndefined(startDate) || !angular.isUndefined(endDate)) {
-                // Category On All
-                if (category == "-1") {
-                    // when date is defined
-                    if (!angular.isUndefined(startDate) && !angular.isUndefined(endDate)) {
-                        $scope.dateR = {};
-                        $scope.dateArray = [];
-                        $scope.dateArray.push(startDate);
-                        $scope.dateArray.push(endDate);
 
-                        $scope.dateR = JSON.stringify($scope.dateArray);
+                // when filtering by only category
+                if (angular.isUndefined(category) && angular.isDefined(startDate) && angular.isDefined(endDate)) {
+                    $scope.dateR = {};
+                    $scope.dateArray = [];
+                    $scope.dateArray.push(startDate);
+                    $scope.dateArray.push(endDate);
 
-                        $http.get('/api/issues/date/' + $scope.dateR + '/' + '59673b1434c441b43f3995b4').success(function (issues) {
-                            $scope.issues = issues; // Display filtered Date difference                                                         
-                            console.log("Date filter: ", $scope.issues);
-                        });
-                    } else if (angular.isUndefined(startDate) || angular.isUndefined(endDate)) { //Display all closed incidents when date is undefined
+                    $scope.dateR = JSON.stringify($scope.dateArray);
+
+                    $http.get('/api/issues/date/' + $scope.dateR + '/' + '59673b1434c441b43f3995b4').success(function (issues) {
+                        $scope.issues = issues; // Display filtered Date difference                                                         
+                        console.log("Date filter (category undefined): ", $scope.issues);
+                    });
+                } else
+                    if (category == "-1" && !startDate && !endDate) {
+                        //Display all closed incidents when date is undefined
                         $http.get('/api/issues/' + '59673b1434c441b43f3995b4' + '/statuses').success(function (issues) {
 
                             $scope.issues = issues;
-                            console.log('All closed incidents')
+                            for (var i = 0; i < issues.length; i++) {
+
+                                $scope.issues[i].duration = $scope.resolutionTime($scope.issues[i].added, $scope.issues[i].modified).toFixed(2) + ' Hours';
+
+                            }
+                            console.log('All closed incidents &&')
 
                         });
-                    }
-                    // Category not All
-                } else if (category != "-1") {
-                    // when date is defined
-                    if (!angular.isUndefined(startDate) && !angular.isUndefined(endDate)) {
+                    } else
+                        if (category == "-1" && angular.isDefined(startDate) && angular.isDefined(endDate)) {
+                            // when date is defined displaay all closed incidents
+                            $scope.dateR = {};
+                            $scope.dateArray = [];
+                            $scope.dateArray.push(startDate);
+                            $scope.dateArray.push(endDate);
 
-                        $scope.dateR = {};
-                        $scope.dateArray = [];
-                        $scope.dateArray.push(startDate);
-                        $scope.dateArray.push(endDate);
+                            $scope.dateR = JSON.stringify($scope.dateArray);
 
-                        $scope.dateR = JSON.stringify($scope.dateArray);
+                            $http.get('/api/issues/date/' + $scope.dateR + '/' + '59673b1434c441b43f3995b4').success(function (issues) {
+                                $scope.issues = issues; // Display filtered Date difference   
+                                for (var i = 0; i < issues.length; i++) {
+
+                                    $scope.issues[i].duration = $scope.resolutionTime($scope.issues[i].added, $scope.issues[i].modified).toFixed(2) + ' Hours';
+
+                                }
+                                console.log("Date filter: ");
+                            });
+                        } else
+                            if (category != "-1" && !startDate && !endDate) {
+                                // filtered by only Category
+                                $http.get('/api/issues/' + category + '/' + '59673b1434c441b43f3995b4').success(function (issues) {
+                                    $scope.issues = issues;
+                                    for (var i = 0; i < issues.length; i++) {
+
+                                        $scope.issues[i].duration = $scope.resolutionTime($scope.issues[i].added, $scope.issues[i].modified).toFixed(2) + ' Hours';
+
+                                    }
+                                    console.log('category filter');
+
+                                });
+                            } else
+                                // filter by both category and date
+                                if (category != "-1" && angular.isDefined(startDate) && angular.isDefined(endDate)) {
+
+                                    $scope.dateR = {};
+                                    $scope.dateArray = [];
+                                    $scope.dateArray.push(startDate);
+                                    $scope.dateArray.push(endDate);
+
+                                    $scope.dateR = JSON.stringify($scope.dateArray);
+
+                                    $http.get('/api/issues/date/' + $scope.dateR + '/' + category + '/' + '59673b1434c441b43f3995b4').success(function (issues) {
 
 
-                        $http.get('/api/issues/date/' + $scope.dateR + '/' + category + '/' + '59673b1434c441b43f3995b4').success(function (issues) {
+                                        $scope.issues = issues;
+                                        for (var i = 0; i < issues.length; i++) {
+
+                                            $scope.issues[i].duration = $scope.resolutionTime($scope.issues[i].added, $scope.issues[i].modified).toFixed(2) + ' Hours';
+
+                                        }
+                                        console.log("category, date Filter: ");
+                                        console.log("Start :", startDate);
+                                        console.log("End: ", endDate);
 
 
-                            $scope.issues = issues;
-                            console.log("category, date Filter: ", $scope.issues);
+                                    });
+                                }
 
-
-                        });
-                    } else if (angular.isUndefined(startDate) || angular.isUndefined(endDate)) {
-                        $http.get('/api/issues/' + category + '/' + '59673b1434c441b43f3995b4').success(function (issues) {
-                            $scope.issues = issues; // Display filtered Category
-                            console.log('category filter', $scope.issues);
-
-                        });
-                    }
-                } 
-            } else if (angular.isUndefined(category) && !angular.isUndefined(startDate) && !angular.isUndefined(endDate)) {
-                $scope.dateR = {};
-                $scope.dateArray = [];
-                $scope.dateArray.push(startDate);
-                $scope.dateArray.push(endDate);
-
-                $scope.dateR = JSON.stringify($scope.dateArray);
-
-                $http.get('/api/issues/date/' + $scope.dateR + '/' + '59673b1434c441b43f3995b4').success(function (issues) {
-                    $scope.issues = issues; // Display filtered Date difference                                                         
-                    console.log("Date filter: ", $scope.issues);
-                });
             }
 
         };//end searchIssue
@@ -315,10 +338,9 @@ angular.module('serviceDeskApp')
         $scope.resolutionTime = function (dateCaptured, modified) {
 
             var now = moment(modified); //todays date
-            console.log('modified', modified);
+            console.log('Date modified: ', modified);
             var duration = moment.duration(now.diff(dateCaptured));
             duration = duration.asHours();
-            console.log('see hours', duration);
             return duration;
         }
 
