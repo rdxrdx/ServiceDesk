@@ -13,7 +13,7 @@ var sendmail = function(name, email, mailConfirmationToken, callback){
       name: user.name,
       COMPANY: 'Service Desk',
       CONFIRMATION_URL : 'http://localhost:8080/rating/',
-      MAIL_RATING_TOKEN : mailRatingToken
+      MAIL_RATING_TOKEN : mailConfirmationToken
     };
 	//console.log(locals)
 

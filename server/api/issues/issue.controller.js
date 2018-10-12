@@ -7,6 +7,7 @@ var Issue = require('./issue.model');
 var nodemailer = require('nodemailer');
 var Templation  = require('nodemailer-templation');
 var path        = require('path');
+var mail = require('../../mail');
 
 
 //kue
@@ -352,8 +353,9 @@ var mailOptions = {
                        to: 'mohaumofokeng18@gmail.com',// list of receivers
                   subject: 'Service Rating', 
                   COMPANY: 'Service Desk',
-                  RATING_URL : 'http://localhost:8080/confirm',
-                         html: '<!DOCTYPE html>'+
+                //   CONFIRMATION_URL : 'http://localhost:8080/rating',
+				//   MAIL_CONFIRMATION_TOKEN : mailConfirmationToken,
+                    html: '<!DOCTYPE html>'+
                      '<head><script data-require="angular.js@*" data-semver="1.5.0" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js">'
                      + '</script><script src="https://code.angularjs.org/1.5.0/angular-animate.min.js"></script>' + 
                      '<script src="https://code.angularjs.org/1.5.0/angular-aria.min.js"></script>' + 
@@ -362,50 +364,19 @@ var mailOptions = {
                      '<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">' + 
                      '<link rel="stylesheet" href="app\rating\jk.rating.min.css" />' + 
                      '<link rel="stylesheet" href="app\rating\rating.css" />' + 
-                    //  '<script src="app\rating\jk.rating.min.js"></script>' + 
-                    //  '<script src="script.js"></script></head>'+
-                     '<body ng-controller="MyCtrl" style="padding: 20px" ><div layout="column">' + '<div style="width: 100px">{{secondRate}} Stars</div>' +
-                     '<a><h3>Star Rating</h3><jk-rating-stars max-rating="7" rating="secondRate" on-rating="onItemRating(rating)"></jk-rating-stars></a>' +
-                     '<img src="http://www.pnet.co.za/upload_za/logo/S/logoSkhomo-Technologies-18249ZEN.gif" alt="" width="160">'+
-                     '<p>Thank you for using our services.</p>'+
-                     '<a><star-rating></star-rating</a>'
-                     //'<p>Name: {{Username}}  </p>',
-                    //   filename: 'rating',
-                    //   path: ".app\rating\rating.js"
-                       //cid: 'unique@kreata.ee' //same cid value as in the html img src
-                    };
-        // var locals = {
-        //                 email:user.email,
-        //                 name:user.name,
-        //                 COMPANY: 'Service Desk',
-        //                 RATING_URL : 'http://localhost:8080/rating',
-        //                 MAIL_RATING_TOKEN : mailRatingToken
-        //               };
-        //           //console.log(locals)
-        //           var templateName = '/star_rating/html';
-        //           //mail.userConfirmation.sendMail(templateName, locals, null);
-                  
-        //            //mail.userConfirmation.sendMail(req.body.firstName, req.body.email, mailConfirmationToken, null);
-        //           mail.userRating.sendMail(user.name, user.email, mailRatingToken, null)
-      
-        //        });
-        //var templateName = '/star_rating/html';
-
-    transporter.sendMail(mailOptions, null)
- //var Mailer = new Templation({
-            // templates: {
-                        //  reply:  '.\client\app\rating'
-                       // }
-                     
-                     // plain text body
-                     //MAIL_RATING_TOKEN : mailRatingToken
-       
-    //console.log(locals)
-        // var templateName = '/star_rating/html' //mail.userConfirmation.sendMail(templateName, locals, null);
-         
-          //mail.userConfirmation.sendMail(req.body.firstName, req.body.email, mailConfirmationToken, null);
-        // mail.userRating.sendMail(user.name, user.email, mailRatingToken, null)
-
+                     '<img src="http://www.pnet.co.za/upload_za/logo/S/logoSkhomo-Technologies-18249ZEN.gif" alt="" width="160">' +
+                     '<body><title>Creating A form</title>' + '<style>input[type=text]{width : 50%;border:2px solid #aaa;margin:8px 0;outline :none;padding : 8px;box-sizing :border-box;transition:3s;}input[type=text]:focus{border-color:dodgerBlue;box-shadow:0 0 8px 0 dodgerBlue;}</style>' +
+                     ' <div><tr><h3>Overrall how Dissatisfied or Satisfied are you with the system</h3><form> </tr></div>' +
+                     '<input type="radio" name="sname" value="sname"/><br>Very Satisfying<input type="radio" name="sname" value="sname"/>Somewhat Satisfying<input type="radio" name="sname" value="sname"/>Very Dissatisfied<input type="radio" name="sname" value="sname"/>Neutral<input type="radio" name="sname" value="sname"/>Bad<input type="radio" name="sname" value="sname"color:"red"/>Worse<br>' +
+                     '<h3>Overrall how Dissatisfied or Satisfied are you with the system</h3><input type="radio" name="sname" value="sname"/>Very Satisfying<input type="radio" name="sname" value="sname"/>Somewhat Satisfying<input type="radio" name="sname" value="sname"/>Very Dissatisfied<input type="radio" name="sname" value="sname"/>Neutral<input type="radio" name="sname" value="sname"/>Bad<input type="radio" name="sname" value="sname"/>Worse<br>' +
+                     '<h3>Overrall how Dissatisfied or Satisfied are you with the system</h3><input type="radio" name="sname" value="sname"/>Very Satisfying<input type="radio" name="sname" value="sname"/>Somewhat Satisfying<input type="radio" name="sname" value="sname"/>Very Dissatisfied<input type="radio" name="sname" value="sname"/>Neutral<input type="radio" name="sname" value="sname"/>Bad<input type="radio" name="sname" value="sname"/>Worse<br>' +
+                      '<h3>Overrall how Dissatisfied or Satisfied are you with the system</h3><input type="radio" name="sname" value="sname"/>Very Satisfying<input type="radio" name="sname" value="sname"/>Somewhat Satisfying<input type="radio" name="sname" value="sname"/>Very Dissatisfied<input type="radio" name="sname" value="sname"/>Neutral<input type="radio" name="sname" value="sname"/>Bad<input type="radio" name="sname" value="sname"/>Worse<br>' +
+                      '<h3>Any suggestions</h3><input type="text" placeholder="suggestions">' + '<br>' +
+                      '<input type="submit" value="Submit" <a> href="https://www.w3schools.com" target="iframe_a">W3Schools.com </a>  <br>' + 
+                      '</form></body>'
+};
+                    transporter.sendMail(mailOptions, null)
+ 
 });
 
 transporter.sendMail(mailOptions,function (err,info) {
