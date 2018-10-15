@@ -417,8 +417,14 @@ var mailOptions = {
                                                                                                                     '<a href="http://example.com/?rating=1" class="star" target="_blank" lang="x-star-divbox" style="color: #FFCC00; text-decoration: none; display: inline-block;height: 50px;width: 55px;overflow: hidden;line-height: 60px;" tabindex="5">' +
                                                                                                                         '<div lang="x-empty-star" style="margin: 0;display: inline-block;">☆</div>' +
                                                                                                                         '<div lang="x-full-star" style="margin: 0;display: inline-block; width:0; overflow:hidden;float:left; display:none; height: 0; max-height: 0;">★</div></a>' +
-                                                                                                                    '<a href="http://example.com/?rating=1" class="star-number" target="_blank" lang="x-star-number" style="font-family: sans-serif;color: #AEAEAE; font-size: 14px; line-height: 14px; text-decoration: none; display: block;height: 50px;width: 55px;overflow: hidden;line-height: 60px;border-bottom: 3px solid #FFFFFF; text-align: center;">' + '</a></div></td></tr></tbody></table></div></div>' +
-'<div style="margin-bottom: 0px; line-height: 30px; font-size: 30px;">&nbsp;</div></div></div></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></table></center></center></td></tr></tbody></table></body>'
+                                                                                                                    '<a href="http://example.com/?rating=1" class="star-number" target="_blank" lang="x-star-number" style="font-family: sans-serif;color: #AEAEAE; font-size: 14px; line-height: 14px; text-decoration: none; display: block;height: 50px;width: 55px;overflow: hidden;line-height: 60px;border-bottom: 3px solid #FFFFFF; text-align: center;">1</a></d></td>' + 
+                                                                                                                    '<td style="padding: 0;vertical-align: top" width="55" class="star-wrapper" lang="x-star-wrapper">' +
+                                                                                                                '<div style="display: block; text-align: center; float: left;width: 55px;overflow: hidden;line-height: 60px;">' +
+                                                                                                                    '</a></div></td></tr></tbody></table></div></div>' + '<br>' +
+                                                                                                                    
+                                                                                                             
+                                                                                                                    
+'</div></div></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></table></center></center></td></tr></tbody></table></body>'
                                                                                                         
                     
                      
