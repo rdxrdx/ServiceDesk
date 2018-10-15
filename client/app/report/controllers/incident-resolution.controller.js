@@ -215,7 +215,7 @@ angular.module('serviceDeskApp')
     });
     
     $scope.getValues = function() {
-        var labs = ['New','Approved','Rejected','clossed'];
+        var labs = ['New','Approved','Rejected','clossed','UnAssigned'];
         var ourData = [];
         
         for (var i = 0; i<labs.length; i++){

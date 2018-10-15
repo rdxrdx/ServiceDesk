@@ -133,7 +133,7 @@ exports.prioritisation = function(req, res) {
         }
 	});
 };
-/*// Incident Status Reports
+// Incident Status Reports
 
 exports.data = function(req, res) {
 
@@ -172,13 +172,13 @@ exports.data = function(req, res) {
         }
 
     });
-};*/
+};
 
 
 
 // Incident Status Reports
 exports.data = function(req, res) {
-/*	Issue.find().sort(
+	Issue.find().sort(
     { 
         issuePriorityId : -1.0
     })
@@ -213,7 +213,7 @@ exports.data = function(req, res) {
         }
 	});
 };
-*/
+
 
 // Get list of visitors
 exports.index = function(req, res) {

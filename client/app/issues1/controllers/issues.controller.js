@@ -1,4 +1,4 @@
-'use strict';
+   'use strict';
 
 angular.module('serviceDeskApp')
 .controller('IssueCtrl', function ($scope, $http, $modal, $log, $filter, socket) {

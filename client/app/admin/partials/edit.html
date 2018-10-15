@@ -67,7 +67,7 @@
 							</div>
 
 							<div class="form-group" ng-if="user.role != 'client' || user.clientType == 'Individual'" ng-class="{'has-error': editUserForm.lastName.$error.required && submitted,'has-success': !editUserForm.lastName.$error.required && submitted}">
-								<label class="control-label" for="lastName">Last Name:</label>
+								<label class="control-label" for="lastName">Last Name</label>
 								<input type="text" id="lastName" name="lastName" ng-model="user.lastName" ng-required="user.role != 'client'" class="form-control"/>
 								<p ng-show="editUserForm.lastName.$error.required  && submitted" class="help-block">The Last Name is required</p>
 							</div>

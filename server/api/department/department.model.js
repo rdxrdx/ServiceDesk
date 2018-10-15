@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 
 var DepartmentSchema = new Schema({
 	departmentName: String,
-	departmentDescription: String,
+	//departmentDescription: String,
     departmentManager: {type: Schema.Types.ObjectId, ref: 'User' },
 	status: {
 		type: String,

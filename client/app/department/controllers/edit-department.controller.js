@@ -17,11 +17,11 @@ angular.module('serviceDeskApp')
 
     $scope.editDepartment = function(department,isValid) {
         $scope.submitted = true;
-        $scope.department = department;
+        $scope.department = department_id;
         if(isValid && $scope.submitted) {
-            $http.put('/api/department/' + $scope.department_id,department);
-            $scope.department = '';
-            $location.path('/department');
+            $http.post('/api/department/' + $scope.department_id,department);
+            $scope.department = department;
+            $location.path('/api/department');
         }
     };
 

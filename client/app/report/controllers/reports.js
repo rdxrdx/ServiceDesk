@@ -87,12 +87,12 @@ anychart.onDocumentReady(function() {
             data = issues;
 
     
-/*
+
              // create the chart
              var chart = anychart.pie();
             
              // set the chart title
-             chart.title("Incident Prioritisation Report2");
+             chart.title("Incident Prioritisation Report");
              // add the data
              chart.data(data);
              // display the chart in the container
@@ -123,7 +123,7 @@ anychart.onDocumentReady(function() {
 
         });
 
-        */
+        
     
     //create data
     $http.get('/api/issues/sourceReport').success(function(issues) {

@@ -143,7 +143,8 @@ angular.module('serviceDeskApp')
                });
            });
     }
-    /*$http.get('/api/issues/assignedUser/'+$scope.currentUser._id).success(function(issues) {
+    /*
+    $http.get('/api/issues/assignedUser/'+$scope.currentUser._id).success(function(issues) {
         $scope.issues = issues;
        
          $scope.counts={};

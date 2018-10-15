@@ -3,6 +3,16 @@
 angular.module('serviceDeskApp')
 .controller('AddEvaluationCtrl', function ($scope, $http, $window, $location) {
 
+
+    $http.get('/api/issue-status').success(function (issuestatuses) {
+        issuestatuses.unshift({
+        issueStatusName: 'All',
+            _id: -1
+        });
+        $scope.issuestatuses = issuestatuses;
+    });
+
+
     $scope.evaluation = {};
 
     $scope.addEvaluation = function(evaluation,isValid) {

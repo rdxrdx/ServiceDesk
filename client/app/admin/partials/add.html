@@ -74,11 +74,7 @@
 								<p ng-show="addUserForm.lastName.$error.required  && submitted" class="help-block">The Company Name is required</p>
 							</div>
 
-							<div class="form-group" ng-if="user.role == 'User' || user.clientType == 'Individual'" ng-class="{'has-error': addUserForm.lastName.$error.required && submitted,'has-success': !addUserForm.lastName.$error.required && submitted}">
-								<label class="control-label" for="lastName">Last Name:</label>
-								<input type="text" id="lastName" name="lastName" ng-model="user.lastName" ng-required="user.role == 'User'" class="form-control"/>
-								<p ng-show="addUserForm.lastName.$error.required  && submitted" class="help-block">The Last Name is required</p>
-							</div>
+						
 
 							<div class="form-group" ng-class="{'has-error': addUserForm.departmentName.$invalid && submitted,'has-success': !addUserForm.departmentName.$invalid && submitted}">
 								<label>Department:</label>
@@ -168,7 +164,7 @@
 								<input type="clientLocation" id="clientLocation" name="clientLocation" type="clientLocation" ng-model="user.clientLocation" ng-required="user.role == 'client'" class="form-control"/>
 								<p ng-show="addUserForm.clientLocation.$invalid && submitted" class="help-block">A Client Location is required</p>
 							</div>
-
+<!-- 
 							<div class="form-group password animate-show" ng-show="user.role == 'User'" ng-class="{'has-error': (addUserForm.password.$error.minlength || addUserForm.password.$error.maxlength || addUserForm.password.$invalid) && submitted,'has-success': (!addUserForm.password.$error.minlength && !addUserForm.password.$error.maxlength && !addUserForm.password.$invalid) && submitted}">
 								<label class="control-label" for="password">Password:</label>
 								<input type="password" id="password" name="password" ng-model="user.password" ng-minlength="3" ng-maxlength="20" ng-required="user.role == 'User'" class="form-control"/>
@@ -181,9 +177,10 @@
 								<label class="control-label" for="confirmPassword">Confirm Password:</label>
 								<input type="password" id="confirmPassword" name="confirmPassword" ng-model="user.confirmPassword" ui-validate="{passwordsMatch: 'passwordsMatch($value)'}" ui-validate-watch="'user.password'" ng-required="user.role == 'User'" class="form-control"/>
 								<p ng-show="addUserForm.confirmPassword.$dirty && (addUserForm.confirmPassword.$error.passwordsMatch && submitted)" class="help-block">Passwords don't match</p>
-							</div>
+							
 
-
+						
+						</div> -->
 							<div class="box-footer">
 								<button type="submit" class="btn btn-small btn-primary">Submit</button>
 								<a ng-click="cancel()" class="btn btn-small">Cancel</a>

@@ -9,7 +9,7 @@ angular.module('serviceDeskApp')
 
     $http.get('/api/division').success(function(divisions) {
         $scope.divisions = divisions;
-        socket.syncUpdates('division', $scope.divisions,function(event,division,divisions){
+        socket.syncUpdates('division', $scope.divisions,function(event,division){
         });
     });
 

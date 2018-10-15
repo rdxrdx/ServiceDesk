@@ -42,11 +42,27 @@
 								<p ng-show="addEvaluationForm.evaluationoutcomeName.$invalid && submitted" class="help-block">The Name is required.</p>
 							</div>
 
-							<div class="form-group" ng-class="{'has-error': addEvaluationForm.evaluationoutcomeDescrioption.$invalid && submitted}">
+							<div class="form-group" ng-class="{'has-error': addEvaluationForm.evaluationoutcomeDescription.$invalid && submitted}">
 								<label>Evaluation Description :</label>
-								<input class="form-control" type="text" ng-model="evaluation.evaluationoutcomeDescrioption" name="evaluationoutcomeDescrioption" id="evaluationoutcomeDescrioption" required/>
-								<p ng-show="addEvaluationForm.evaluationoutcomeDescrioption.$invalid && submitted" class="help-block">Evaluation Description is required.</p>
+								<input class="form-control" type="text" ng-model="evaluation.evaluationoutcomeDescription" name="evaluationoutcomeDescrioption" id="evaluationoutcomeDescription" required/>
+								<p ng-show="addEvaluationForm.evaluationoutcomeDescription.$invalid && submitted" class="help-block">Evaluation Description is required.</p>
 							</div>
+
+
+							<div class="form-group" ng-class="{'has-error': editIssueForm.issueStatus.$invalid && submitted,'has-success': !editIssueForm.issueStatus.$invalid && submitted}">
+                                <label>Status:</label>
+                                <ui-select id="issueStatus" name="issueStatus" ng-model="issue.issueStatus" theme="bootstrap" required>
+                                    <ui-select-match placeholder="Select a Status">{{$select.selected.issueStatusName}}</ui-select-match>
+                                    <ui-select-choices repeat="issuestatus in issuestatuses | filter: $select.search" value="{{issueStatus._id}}">
+                                        <!-- <div ng-bind-html="issuestatus.issueStatusName | highlight: $select.search"></div> -->
+
+                                        <small>
+                                            <!-- Description: {{issuestatus.issueStatusDescription}} -->
+											</small>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <p ng-show="editIssueForm.issueStatus.$invalid && submitted" class="help-block">The Status is required.</p>
+                            </div>
 
 							<!--<div class="form-group" ng-class="{'has-error': addEvaluationForm.divisionContact.$invalid && submitted}">
 								<label>Contact:</label>

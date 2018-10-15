@@ -110,16 +110,19 @@ angular.module('serviceDeskApp')
         }
     };
 
+   
+
     $scope.passwordsMatch = function(value) {
-        if($scope.submitted && $scope.user.role === 'User') {
+        console.log(value);
+        //if($scope.submitted && $scope.user.role === 'User') {
             if(value && value === $scope.user.password)
                 return true;
             else
                 return false;
-        } else {
-            return true;
-        }
+        //} 
     };
+
+
 
     $scope.cancel = function() {
         $window.history.back();

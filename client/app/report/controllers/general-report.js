@@ -28,7 +28,7 @@ anychart.onDocumentReady(function() {
         data = issues;
 
 
-/*
+
          // create the chart
 
          var chart = anychart.pie();
@@ -36,7 +36,7 @@ anychart.onDocumentReady(function() {
 
          // set the chart title
 
-         chart.title("Issues by Status ");
+         chart.title("Issues by Status  ");
 
      
 
@@ -94,7 +94,7 @@ anychart.onDocumentReady(function() {
 
              // set the chart title
 
-             chart.title("Neli n Nevy");
+             chart.title("Incident by status ");
 
          
 
@@ -152,7 +152,7 @@ anychart.onDocumentReady(function() {
 
                  // set the chart title
 
-                 chart.title("Incident Source Report");
+                 chart.title("Incident prioritisation Report");
 
              
 
