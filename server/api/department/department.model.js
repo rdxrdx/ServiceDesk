@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 	autoIncrement = require('mongoose-auto-increment');
 
 var DepartmentSchema = new Schema({
+	departmentId:{ type: Number },
 	departmentName: String,
 	departmentDescription: String,
     departmentManager: {type: Schema.Types.ObjectId, ref: 'User' },

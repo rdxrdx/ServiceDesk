@@ -12,18 +12,19 @@ router.get('/resolution', auth.isAuthenticated(), controller.resolution);
 router.get('/dashb', controller.dashb);
 router.get('/sourceReport', auth.isAuthenticated(), controller.sourceReport);
 router.get('/:id', auth.isAuthenticated(), controller.show);
-router.get('/:category/categories', auth.isAuthenticated(), controller.showIssuesByCategory);
 router.get('/assignedUser/:assignedUser', auth.isAuthenticated(), controller.getIssueByUser);
 router.get('/reportedBy/:assignedUser', auth.isAuthenticated(), controller.getIssueByReporter);
-router.get('/date/:dateRange', auth.isAuthenticated(), controller.showJobIssuesByDate);
 router.get('/prioritisation/:status', auth.isAuthenticated(), controller.prioritisation)
 
+
+router.get('/:category/categories', auth.isAuthenticated(), controller.showIssuesByCategory);
+router.get('/date/:dateRange', auth.isAuthenticated(), controller.showJobIssuesByDate);
 router.get('/:status/statuses', auth.isAuthenticated(), controller.showJobIssuesByStatus);
 router.get('/date/:dateRange/:category/:status', auth.isAuthenticated(), controller.showFilteredClosedIssues);
 router.get('/date/:dateRange/:status', auth.isAuthenticated(), controller.showClosedIssuesFilteredbydate);
-
-
+router.get('/date/:dateRange/:category', auth.isAuthenticated(), controller.showIssuesFilteredbyCategorydate);
 router.get('/:category/:status', auth.isAuthenticated(), controller.searchIssues);
+
 router.post('/', auth.isAuthenticated(), controller.create);
 router.put('/:id', auth.isAuthenticated(), controller.update);
 router.patch('/:id', auth.isAuthenticated(), controller.update);

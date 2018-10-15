@@ -19,6 +19,6 @@ function onSave(socket, doc, cb) {
   socket.emit('assettype:save', doc);
 }
 
-function onRemove(socket, doc, cb) 
+function onRemove(socket, doc, cb) {
   socket.emit('assettype:remove', doc);
 }

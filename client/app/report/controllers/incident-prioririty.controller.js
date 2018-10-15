@@ -262,8 +262,6 @@ angular.module('serviceDeskApp')
 
                                         }
                                         console.log("category, date Filter: ");
-                                        console.log("Start :", startDate);
-                                        console.log("End: ", endDate);
 
 
                                     });

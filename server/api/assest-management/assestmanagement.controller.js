@@ -95,7 +95,7 @@ exports.index = function (req, res) {
     Assest.find()
 
         .populate('assetCategory', 'categoryName')
-        .populate('departments', 'departmentName')
+        .populate('departments', 'departmentName departmentId')
         .populate('assetstatuses', 'assetstatusName')
         .populate('users', 'firstName')
 
@@ -132,7 +132,7 @@ exports.show = function (req, res) {
         _id: req.params.id
     }).sort({ added: 1 })
         .populate('assetCategory', 'categoryName')
-        .populate('departments', 'departmentName')
+        .populate('departments', 'departmentName departmentId')
         .populate('assetstatuses', 'assetstatusName')
         .populate('users', 'firstName')
         .exec(function (err, assestmanagements) {
@@ -149,14 +149,14 @@ exports.show = function (req, res) {
 ////new ones 
 
 
-// Search Issue
+// Search Assets
 exports.searchAssestmanagements = function (req, res) {
     Assest.find({
         assetCategory: req.params.category,
         departments: req.params.departments
     }).sort({ added: 1 })
         .populate('assetCategory', 'categoryName')
-        .populate('departments', 'departmentName')
+        .populate('departments', 'departmentName departmentId')
         .populate('assetstatuses', 'assetstatusName')
         .populate('users', 'firstName')
 
@@ -173,7 +173,7 @@ exports.showAssestmanagementsByCategory = function (req, res) {
         assetCategory: req.params.category
     }).sort({ added: 1 })
         .populate('assetCategory', 'categoryName')
-        .populate('departments', 'departmentName')
+        .populate('departments', 'departmentName departmentId')
         .populate('assetstatuses', 'assetstatusName')
         .populate('users', 'firstName')
         .exec(function (err, assestmanagements) {
@@ -183,12 +183,13 @@ exports.showAssestmanagementsByCategory = function (req, res) {
 };
 
 // Search Issues By Status
+
 exports.showJobAssestmanagementsByStatus = function (req, res) {
     Assest.find({
         assetstatuses: req.params.status
     }).sort({ added: 1 })
         .populate('assetCategory', 'categoryName')
-        .populate('departments', 'departmentName')
+        .populate('departments', 'departmentName departmentId')
         .populate('assetstatuses', 'assetstatusName')
         .populate('users', 'firstName')
 
@@ -198,18 +199,20 @@ exports.showJobAssestmanagementsByStatus = function (req, res) {
         });
 };
 
+exports.searchAssestmanagementsBydepartment = function (req, res) {
+    Assest.find({
+        departments: req.params.departments
+    }).sort({ added: 1 })
+        .populate('assetCategory', 'categoryName')
+        .populate('departments', 'departmentName departmentId')
+        .populate('assetstatuses', 'assetstatusName')
+        .populate('users', 'firstName')
 
-
-
-
-
-
-
-
-
-
-
-
+        .exec(function (err, assestmanagements) {
+            if (err) { return handleError(res, err); }
+            return res.json(200, assestmanagements);
+        });
+};
 
 
 // Creates a new assettype in the DB.

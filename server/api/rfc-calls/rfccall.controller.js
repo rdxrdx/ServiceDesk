@@ -146,7 +146,7 @@ exports.searchRfccall = function(req, res) {
 	  .populate('changeRequestType','requesttypeName')
 	  .populate('callEvaluationOutcome','evaluationoutcomeName')
 	 
-    .exec(function (err, irfccall) {
+    .exec(function (err, rfccall) {
 		if(err) { return handleError(res, err); }
 		return res.json(200, rfccall);
 	});

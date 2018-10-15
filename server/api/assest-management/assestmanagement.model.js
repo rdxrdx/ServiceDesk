@@ -11,6 +11,7 @@ var AssestmanagementSchema = new Schema({
     brand: String,
     location : String,
     departments:{ type: Schema.Types.ObjectId, ref: 'Department'},
+    departmentId:{ type: Number, ref: 'Department'},
     custodian: String,
     supplier: String,
     purchaseDate: Date,

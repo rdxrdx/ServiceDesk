@@ -19,6 +19,6 @@ function onSave(socket, doc, cb) {
   socket.emit('assestmanagement:save', doc);
 }
 
-function onRemove(socket, doc, cb) 
+function onRemove(socket, doc, cb) {
   socket.emit('assestmanagement:remove', doc);
 }

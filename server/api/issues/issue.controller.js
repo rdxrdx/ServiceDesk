@@ -388,7 +388,7 @@ exports.searchIssues = function (req, res) {
 exports.sourceReport = function (req, res) {
     Issue.find().sort(
         {
-            issuePriorityId: -1.0
+            "issuePriorityId": -1.0
         })
         .populate('issueCategory', 'categoryName categoryId')
         .populate('issueStatus', 'issueStatusName issueStatusId')
@@ -521,6 +521,32 @@ exports.showClosedIssuesFilteredbydate = function (req, res) {
 };
 
 
+exports.showIssuesFilteredbyCategorydate = function (req, res) {
+    var dateRange = JSON.parse(req.params.dateRange);
+    var startDate = new Date(dateRange[0]),
+        endDate = new Date(dateRange[1]);
+    Issue.find({
+        added: {
+            $gte: new Date(startDate),
+            $lt: new Date(endDate)
+        },
+        issueStatus: req.params.category
+    }).sort(
+        {
+            "issuePriorityId": -1.0
+        })
+        .populate('issueCategory', 'categoryName categoryId')
+        .populate('issueStatus', 'issueStatusName issueStatusId')
+        .populate('issueChannel', 'channelName channelId')
+        .populate('issuePriority', 'priorityName prioritySLA priorityId')
+        .populate('issueDivision', 'divisionName divisionId')
+        .populate('issueUser', 'firstName')
+        .populate('reportedBy', 'firstName')
+        .exec(function (err, issues) {
+            if (err) { return handleError(res, err); }
+            return res.json(200, issues);
+        });
+};
 // Filtered closed incidents by date and category
 
 exports.showFilteredClosedIssues = function (req, res) {
