@@ -70,96 +70,110 @@ angular.module('serviceDeskApp')
 
         $scope.searchRfccall = function (changerequesttype, callevaluationoutcome) {
 
-            if ((changerequesttype == "-1") && (callevaluationoutcome == "-1")) { //get all records
-                $http.get('/api/rfc-calls').success(function (rfccalls) {
-                    $scope.rfccalls = rfccalls;
-                    console.log('/api/rfc-calls/');
-                });
+            // if ((changerequesttype == "-1") && (callevaluationoutcome == "-1")) { //get all records
+            //     $http.get('/api/rfc-calls').success(function (rfccalls) {
+            //         $scope.rfccalls = rfccalls;
+            //         console.log('/api/rfc-calls/');
+            //     });
 
-            } else {
+            // } else {
 
-                if ((changerequesttype != "-1" && !changerequesttype) && (callevaluationoutcome != "-1" && !callevaluationoutcome)) {
-                    $http.get('/api/rfc-calls/' + changerequesttype + '/' + callevaluationoutcome).success(function (rfccalls) {
+            //     if ((changerequesttype != "-1" && !changerequesttype) && (callevaluationoutcome != "-1" && !callevaluationoutcome)) {
+            //         $http.get('/api/rfc-calls/' + changerequesttype + '/' + callevaluationoutcome).success(function (rfccalls) {
 
-                        $scope.rfccalls = rfccalls;
-                    });
-                } else {
+            //             $scope.rfccalls = rfccalls;
+            //         });
+            //     } else {
 
-                    if (changerequesttype != "-1" && !angular.isUndefined(changerequesttype)) {
+            //         if (changerequesttype != "-1" && !angular.isUndefined(changerequesttype)) {
 
-                        $http.get('/api/rfc-calls/' + changerequesttype + '/requesttypes').success(function (rfccalls) {
+            //             $http.get('/api/rfc-calls/' + changerequesttype + '/requesttypes').success(function (rfccalls) {
 
-                            $scope.rfccalls = rfccalls;
+            //                 $scope.rfccalls = rfccalls;
 
-                        });
+            //             });
 
-                    } else if (callevaluationoutcome != "-1") {
+            //         } else if (callevaluationoutcome != "-1") {
 
-                        $http.get('/api/rfc-calls/' + callevaluationoutcome + '/callEvaluationOutcomes').success(function (rfccalls) {
+            //             $http.get('/api/rfc-calls/' + callevaluationoutcome + '/callEvaluationOutcomes').success(function (rfccalls) {
 
-                            $scope.rfccalls = rfccalls;
+            //                 $scope.rfccalls = rfccalls;
 
-                        });
-                    }
+            //             });
+            //         }
 
-                }
+            //     }
 
-            }
-        
+            // }
 
-           /* if ((changerequesttype == "-1") && (callevaluationoutcome == "-1")) { //get all records
-                $http.get('/api/rfc-calls').success(function (rfccalls) {
-                    $scope.rfccalls = rfccalls;
-                    console.log('Display All');
-                });
+            if( angular.isDefined(changerequesttype) || angular.isDefined(callevaluationoutcome) ){
 
-            } else
-                if ((callevaluationoutcome == "-1") && angular.isUndefined(changerequesttype)) { //get all records
+                // filter by none both is All
+                if(changerequesttype == "-1" && callevaluationoutcome == "-1" ){
+
                     $http.get('/api/rfc-calls').success(function (rfccalls) {
                         $scope.rfccalls = rfccalls;
-                        console.log('Display All when request type is undefined');
                     });
+                    console.log('Display All');
+                }else
+                // filter by none request type is undefined
+                if( callevaluationoutcome == "-1" && angular.isUndefined(changerequesttype)){
+                 
+                    $http.get('/api/rfc-calls').success(function (rfccalls) {
+                        $scope.rfccalls = rfccalls;
+                    });
+                    console.log('Display All, Request type is undefined');
+                }else
+                // filter by none  evaluation is undefined
+                if(changerequesttype == "-1" && angular.isUndefined(callevaluationoutcome)){
+                   
+                    $http.get('/api/rfc-calls').success(function (rfccalls) {
+                        $scope.rfccalls = rfccalls;
+                    });
+                    console.log('Display All, Evalution is undefined');
+                }
+                // filter by Request type when call evaluation is All
+                if(callevaluationoutcome == "-1" && changerequesttype != "-1" && angular.isDefined(changerequesttype)){
+                    
+                    $http.get('/api/rfc-calls/' + changerequesttype + '/requesttypes').success(function (rfccalls) {
+                        $scope.rfccalls = rfccalls;
+                    });
+                    console.log('filter by request type, evaluation is All');
+                }else
+                // filter by Request type when call evaluation is undefined
+                if(changerequesttype != "-1" && angular.isDefined(changerequesttype) && angular.isUndefined(callevaluationoutcome)){
+                    
+                    $http.get('/api/rfc-calls/' + changerequesttype + '/requesttypes').success(function (rfccalls) {
+                        $scope.rfccalls = rfccalls;
+                    });
+                    console.log('filter by request type, evaluation is undefined');
+                }
+                else
+                // filter by evaluation outcome when call evaluation is undefined
+                if(callevaluationoutcome != "-1" && angular.isDefined(callevaluationoutcome) && angular.isUndefined(changerequesttype)){
+                    
+                    $http.get('/api/rfc-calls/' + callevaluationoutcome + '/callEvaluationOutcomes').success(function (rfccalls) {
+                        $scope.rfccalls = rfccalls;
+                    });
+                    console.log('filter by Evaluation, request type is undefined');
+                }else
+                // filter by Evaluation outcome when change request type is All
+                if(changerequesttype == "-1" && callevaluationoutcome != "1" && angular.isDefined(callevaluationoutcome) ){
+
+                    $http.get('/api/rfc-calls/' + callevaluationoutcome + '/callEvaluationOutcomes').success(function (rfccalls) {
+                        $scope.rfccalls = rfccalls;
+                    });
+                    console.log('filter by Evaluation, Request type is All');
                 } else
-                    if ((changerequesttype == "-1") && angular.isUndefined(callevaluationoutcome)) { //get all records
-                        $http.get('/api/rfc-calls/' + changerequesttype + '/requesttypes').success(function (rfccalls) {
-                            $scope.rfccalls = rfccalls;
-                            console.log('filter by change');
-                        });
+                // filter by both Request type and evaluation outcome
+                if(changerequesttype != "-1" && angular.isDefined(changerequesttype) && callevaluationoutcome != "-1" && angular.isDefined(callevaluationoutcome)){
 
-
-                    } else
-                        if ((changerequesttype == "-1") && callevaluationoutcome != "-1" && angular.isDefined(callevaluationoutcome)) { //get all records
-                            $http.get('/api/rfc-calls/' + callevaluationoutcome + '/callEvaluationOutcomes').success(function (rfccalls) {
-                                $scope.rfccalls = rfccalls;
-                                console.log('filter by change');
-                            });
-
-                        } else
-                            if (changerequesttype != "-1" && angular.isDefined(changerequesttype) && callevaluationoutcome != "-1" && angular.isDefined(callevaluationoutcome)) {
-                                $http.get('/api/rfc-calls/' + changerequesttype + '/' + callevaluationoutcome).success(function (rfccalls) {
-
-                                    $scope.rfccalls = rfccalls;
-                                    console.log('filter by both');
-                                });
-                            } else
-                                if (changerequesttype != "-1" && angular.isDefined(changerequesttype) && callevaluationoutcome == "-1") {
-
-                                    $http.get('/api/rfc-calls/' + changerequesttype + '/requesttypes').success(function (rfccalls) {
-                                        $scope.rfccalls = rfccalls;
-                                        console.log('filter by change');
-                                    });
-
-                                } else
-                                    if (callevaluationoutcome != "-1" && !angular.isUndefined(callevaluationoutcome) && changerequesttype =="-1" ) {
-
-                                        $http.get('/api/rfc-calls/' + callevaluationoutcome + '/callEvaluationOutcomes').success(function (rfccalls) {
-
-                                            $scope.rfccalls = rfccalls;
-
-                                        });
-                                    }
-                                    */
-
+                    $http.get('/api/rfc-calls/' + changerequesttype + '/' + callevaluationoutcome).success(function (rfccalls) {
+                        $scope.rfccalls = rfccalls;
+                    });
+                    console.log('filter by both Request type and Evaluation');
+                }
+            }
 
         };
 

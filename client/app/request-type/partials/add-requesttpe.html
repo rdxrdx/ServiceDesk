@@ -4,16 +4,16 @@
 
 	<div class="row wrapper border-bottom white-bg page-heading">
 		<div class="col-lg-10">
-			<h2>Add Requesttype</h2>
+			<h2>Add Request Type</h2>
 			<ol class="breadcrumb">
 				<li>
 					<a href="/">Home</a>
 				</li>
 				<li>
-					<a href="/packages">Requesttype</a>
+					<a href="/packages">Request Type</a>
 				</li>
 				<li class="active">
-					<strong>Add Requesttype</strong>
+					<strong>Add Request Type</strong>
 				</li>
 			</ol>
 		</div>
@@ -32,7 +32,7 @@
 
 
 							<div class="form-group" ng-class="{'has-error': Requesttype.requesttypeName.$invalid && submitted,'has-success': !requesttype.priorityName.$invalid && submitted}">
-								<label class="control-label" for="priorityName">Priority Name:</label>
+								<label class="control-label" for="priorityName">Request Type:</label>
 								<input id="requesttypeName" name="priorityName" type="text" ng-model="priority.requesttypeName" required class="form-control"/>
 								<p ng-show="addRequesttypeForm.requesttypeName.$invalid && submitted" class="help-block">The requesttype Name is required</p>
 							</div>

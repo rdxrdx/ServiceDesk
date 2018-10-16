@@ -45,7 +45,7 @@ Add New
                             </div>
                             <div class="col-md-2">
                                 <label for="search">Departments:</label>
-                                <select class="form-control" name="departmentName" id="departmentName" ng-model="department._id" ng-options="department._id as department.departmentName for department in departments"> </select>
+                                <select class="form-control" name="departmentName" id="departmentName" ng-model="department._id" ng-options="department.departmentName._id as department.departmentName for department in departments"> </select>
                             </div>
                             <div class="col-md-2">
                                 <label for="search">Category:</label>

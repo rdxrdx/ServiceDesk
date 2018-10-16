@@ -4,7 +4,7 @@
 
 	<div class="row wrapper border-bottom white-bg page-heading">
 		<div class="col-md-10">
-			<h2>RequestType</h2>
+            <h2>Request Type</h2>
 			<ol class="breadcrumb">
 				<li>
 					<a href="/">Home</a>
@@ -50,10 +50,10 @@
 						<div class="ibox-content table-responsive">
 							<table class="table">
 								<tr>
-									<th>Requesttype Name</th>
-									<th>Requesttype Description</th>
-									<th>Contact</th>
-									<th colspan="5">Actions</th>
+									<th>Request Type </th>
+                                    <th>Description</th>
+                                    <th>Contact</th>
+                                    <th colspan="5">Actions</th>
 								</tr>
 								<tr dir-paginate="requesttype in requesttypes | filter:q | itemsPerPage: pageSize" current-page="currentPage" pagination-id="requesttype">
 									<td>{{requesttype.requesttypeName}}</td>
